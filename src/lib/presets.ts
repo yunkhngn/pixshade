@@ -20,7 +20,7 @@ export const PRESETS: Record<PresetMode, PresetConfig> = {
         labelVi: 'Nhẹ',
         description: 'Minimal noise, image looks almost unchanged',
         descriptionVi: 'Nhiễu nhẹ, ảnh gần như không đổi',
-        intensity: 25,
+        intensity: 40,
         watermarkOpacity: 0.08,
     },
     standard: {
@@ -28,7 +28,7 @@ export const PRESETS: Record<PresetMode, PresetConfig> = {
         labelVi: 'Tiêu chuẩn',
         description: 'Balanced protection and quality',
         descriptionVi: 'Cân bằng giữa bảo vệ và chất lượng',
-        intensity: 50,
+        intensity: 70,
         watermarkOpacity: 0.12,
     },
     maximum: {
@@ -36,7 +36,7 @@ export const PRESETS: Record<PresetMode, PresetConfig> = {
         labelVi: 'Tối đa',
         description: 'Maximum protection, slight quality reduction',
         descriptionVi: 'Tối đa hoá bảo vệ, giảm chất lượng nhẹ',
-        intensity: 85,
+        intensity: 100,
         watermarkOpacity: 0.20,
     },
 };
