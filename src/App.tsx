@@ -63,11 +63,11 @@ function App() {
 
   const handleSelectExample = useCallback((exampleId: string) => {
     const exampleImages: Record<string, string> = {
-      portrait: '/preview.jpg',
-      landscape: '/preview.jpg',
-      street: '/preview.jpg',
+      portrait: '/bocchi.jpg',
+      landscape: '/frieren.jpg',
+      street: '/thang-ngot.jpg',
     };
-    const url = exampleImages[exampleId] || '/preview.jpg';
+    const url = exampleImages[exampleId] || '/bocchi.jpg';
     handleImageSelect(url);
   }, [handleImageSelect]);
 
