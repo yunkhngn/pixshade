@@ -1,6 +1,4 @@
-/**
- * Seeded PRNG (xoshiro128**)
- */
+
 export class PRNG {
     private s: Uint32Array;
 

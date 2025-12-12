@@ -1,7 +1,3 @@
-// Reusing interfaces from lib/metadata but implementing robust logic here
-// Ideally we should import from a shared location, but lib/metadata is existing code.
-// I will redefine interface here to rely only on worker code or just duplicate minimal necessary parts to avoid importing full lib causing potential issues in worker context (though Vite handles it well).
-// Let's try to keep worker self-contained.
 
 export interface WorkerMetadata {
     camera?: string;
@@ -17,31 +13,6 @@ export interface WorkerMetadata {
     // ... other fields
 }
 
-/**
- * Generate split XMP logic
- * 
- * Instead of one large XMP packet, specific strategies:
- * 1. Split across multiple APP1 segments (standard XMP extension)
- * 2. Or just create a valid XMP and ensure it is injected properly.
- * 
- * User request: "metaObj must include seed/version; create XMP XML and split across multiple APP1 or APP2 segments to make stripping harder"
- * 
- * Note: PNG uses iTXt for XMP. JPEG uses APP1.
- * The input to `protectImage` is a Blob. We usually return PNG (lossless is better for protection).
- * If output is PNG, "split APP1" doesn't apply directly (it's for JPEG).
- * But PNG allows multiple iTXt chunks.
- * 
- * Let's assume we output PNG (as per current app logic).
- * We will split the XMP data into multiple iTXt chunks with different keywords or just standard "XML:com.adobe.xmp" distributed?
- * Standard says one XMP packet. 
- * "make stripping harder": we can inject multiple chunks with garbage data + real data mixed?
- * 
- * Let's implement robust single-chunk injection first, with the seed/version added.
- * For true splitting in PNG, we rarely do that.
- * If JPEG, we split 64kb.
- * 
- * Let's add the seed/version to `customTags` equivalent.
- */
 export function createPoisonedXMP(seed: string): string {
     // Basic valid XMP with our tracking/poison data
     const version = '1.0.0';

@@ -6,9 +6,9 @@ interface ExampleChipsProps {
 }
 
 const examples = [
-    { id: 'portrait', label: 'Sample Portrait', icon: User, color: 'accent-lavender' },
-    { id: 'landscape', label: 'Landscape Demo', icon: Mountain, color: 'accent-mint' },
-    { id: 'street', label: 'Street Photo', icon: Building, color: 'primary' },
+    { id: 'portrait', label: 'Bocchi', icon: User, color: 'accent-lavender' },
+    { id: 'landscape', label: 'Frieren', icon: Mountain, color: 'accent-mint' },
+    { id: 'street', label: 'Thắng Ngọt', icon: Building, color: 'primary' },
 ];
 
 export function ExampleChips({ onSelectExample }: ExampleChipsProps) {

@@ -90,8 +90,9 @@ export function Header() {
                         </motion.div>
                     </div>
                     <p className="text-neutral-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4">
-                        PixShade runs fully in your browser using frequency-domain
-                        perturbation and metadata obfuscation.
+                        PixShade runs fully in your browser, utilizing
+                        <strong> Multi-Scale DCT</strong> perturbation and
+                        <strong> Split-Metadata</strong> obfuscation to keep your photos safe.
                     </p>
                 </motion.div>
             </div>

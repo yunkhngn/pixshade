@@ -45,7 +45,7 @@ export function HowItWorks() {
                     </p>
                 </motion.div>
 
-                {/* Step 1: Frequency Perturbation */}
+                {/* Step 1: Advanced Frequency Protection */}
                 <motion.section
                     className="mb-16"
                     initial={{ opacity: 0, y: 30 }}
@@ -57,7 +57,7 @@ export function HowItWorks() {
                             <Waves className="w-6 h-6 text-primary" />
                         </div>
                         <h2 className="text-2xl font-bold text-neutral-600">
-                            1. Frequency-Domain Perturbation
+                            1. Advanced Frequency Protection
                         </h2>
                     </div>
 
@@ -65,40 +65,38 @@ export function HowItWorks() {
                         <div className="grid md:grid-cols-2 gap-8">
                             <div>
                                 <h3 className="text-lg font-semibold text-neutral-600 mb-3">
-                                    What is DCT?
+                                    Multi-Scale DCT Perturbation
                                 </h3>
-                                <p className="text-neutral-500 mb-4">
-                                    The Discrete Cosine Transform (DCT) converts your image from
-                                    pixels into frequency components. This is the same technique
-                                    used in JPEG compression.
+                                <p className="text-neutral-500 mb-4 text-sm leading-relaxed">
+                                    We use a <strong>Multi-Scale Discrete Cosine Transform (DCT)</strong> approach
+                                    to apply protective noise across various frequency bands. By operating on
+                                    multiple scales (16x16, 8x8, and 4x4 blocks), we target both broad structures
+                                    and fine details, making it significantly harder for AI models to reconstruct
+                                    the original image features.
                                 </p>
                                 <h3 className="text-lg font-semibold text-neutral-600 mb-3">
-                                    How perturbation works
+                                    Tiled Signature & Universal Patterns
                                 </h3>
-                                <p className="text-neutral-500">
-                                    We inject carefully calculated noise into the mid-frequency
-                                    range of your image. This noise is:
+                                <p className="text-neutral-500 mb-4 text-sm leading-relaxed">
+                                    To resist template matching and removal attacks, we inject a
+                                    <strong> deterministic tiled signature</strong> that shifts coefficients
+                                    pseudo-randomly based on a secure seed. In 'Strong' mode, we also apply
+                                    <strong> Universal Adversarial Perturbations</strong>—patterns specifically
+                                    trained to disrupt common vision models.
                                 </p>
-                                <ul className="mt-3 space-y-2 text-neutral-500">
+                                <ul className="mt-4 space-y-2 text-neutral-500 text-sm">
                                     <li className="flex items-start gap-2">
-                                        <Eye className="w-5 h-5 text-accent-mint mt-0.5 flex-shrink-0" />
+                                        <Eye className="w-4 h-4 text-accent-mint mt-0.5 flex-shrink-0" />
                                         <span>
-                                            <strong>Invisible to humans</strong> - You won't notice
-                                            any difference
+                                            <strong>Perceptually Optimized</strong> - tuned to maintain
+                                            high PSNR (&gt;38dB) visual quality.
                                         </span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <EyeOff className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                                        <EyeOff className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                                         <span>
-                                            <strong>Confusing to AI</strong> - Disrupts pattern
-                                            recognition
-                                        </span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <Cpu className="w-5 h-5 text-accent-lavender mt-0.5 flex-shrink-0" />
-                                        <span>
-                                            <strong>Processed locally</strong> - No server upload
-                                            required
+                                            <strong>Robust Against Resizing</strong> - Multi-scale noise
+                                            survives downscaling better than standard noise.
                                         </span>
                                     </li>
                                 </ul>
@@ -106,40 +104,40 @@ export function HowItWorks() {
                             <div className="bg-cream rounded-xl p-6">
                                 <div className="text-center mb-4">
                                     <span className="text-sm font-medium text-neutral-400">
-                                        Perturbation Process
+                                        The Protection Pipeline
                                     </span>
                                 </div>
-                                <div className="space-y-4">
+                                <div className="space-y-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-lg bg-neutral-300/50 flex items-center justify-center text-neutral-600 text-sm font-bold">
+                                        <div className="w-8 h-8 rounded-lg bg-neutral-300/50 flex items-center justify-center text-neutral-600 text-xs font-bold">
                                             1
                                         </div>
-                                        <span className="text-neutral-600">
-                                            Split image into 8×8 blocks
+                                        <span className="text-neutral-600 text-sm">
+                                            Apply Universal Perturbation (Strong Mode)
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-lg bg-neutral-300/50 flex items-center justify-center text-neutral-600 text-sm font-bold">
+                                        <div className="w-8 h-8 rounded-lg bg-neutral-300/50 flex items-center justify-center text-neutral-600 text-xs font-bold">
                                             2
                                         </div>
-                                        <span className="text-neutral-600">
-                                            Apply 2D DCT transform
+                                        <span className="text-neutral-600 text-sm">
+                                            Multi-Scale DCT Decomposition (16/8/4)
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary text-sm font-bold">
+                                        <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary text-xs font-bold">
                                             3
                                         </div>
-                                        <span className="text-neutral-600">
-                                            Inject noise in mid-frequencies
+                                        <span className="text-neutral-600 text-sm">
+                                            Mid-Freq Noise Injection & Tiled Shifts
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-lg bg-neutral-300/50 flex items-center justify-center text-neutral-600 text-sm font-bold">
+                                        <div className="w-8 h-8 rounded-lg bg-neutral-300/50 flex items-center justify-center text-neutral-600 text-xs font-bold">
                                             4
                                         </div>
-                                        <span className="text-neutral-600">
-                                            Inverse DCT to reconstruct
+                                        <span className="text-neutral-600 text-sm">
+                                            Reconstruction & PSNR Quality Check
                                         </span>
                                     </div>
                                 </div>
@@ -166,9 +164,10 @@ export function HowItWorks() {
 
                     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8">
                         <p className="text-neutral-500 mb-6">
-                            AI scrapers often collect EXIF metadata (camera info, location,
-                            date, etc.) along with images. We inject deliberately misleading
-                            metadata to confuse data collection systems.
+                            AI scrapers often collect EXIF and XMP metadata (camera info, location,
+                            date, etc.) along with images. We use an <strong>Split XMP Injection</strong> technique
+                            to distribute fake metadata across multiple chunks, making it harder to strip
+                            programmatically while remaining valid for standard readers.
                         </p>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -252,7 +251,8 @@ export function HowItWorks() {
                                 </h3>
                                 <p className="text-sm text-neutral-500">
                                     Protected images are generated instantly and downloaded
-                                    directly to your device.
+                                    directly to your device. Supports 'Basic' and 'Strong' modes
+                                    to balance speed and protection.
                                 </p>
                             </div>
                         </div>
