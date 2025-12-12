@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { Upload, Link, Shield, Loader2 } from 'lucide-react';
+import { useState, useCallback, useRef } from 'react';
+import { Upload, Link, Shield, Loader2, ImagePlus, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface DropzoneCardProps {
@@ -9,6 +9,10 @@ interface DropzoneCardProps {
     onIntensityChange: (value: number) => void;
     metadataPoisoning: boolean;
     onMetadataPoisoningChange: (value: boolean) => void;
+    watermarkEnabled: boolean;
+    onWatermarkEnabledChange: (value: boolean) => void;
+    watermarkFile: File | null;
+    onWatermarkFileChange: (file: File | null) => void;
     isProcessing?: boolean;
 }
 
@@ -19,10 +23,15 @@ export function DropzoneCard({
     onIntensityChange,
     metadataPoisoning,
     onMetadataPoisoningChange,
+    watermarkEnabled,
+    onWatermarkEnabledChange,
+    watermarkFile,
+    onWatermarkFileChange,
     isProcessing = false,
 }: DropzoneCardProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const watermarkInputRef = useRef<HTMLInputElement>(null);
 
     const handleDragOver = useCallback((e: React.DragEvent) => {
         e.preventDefault();
@@ -62,6 +71,13 @@ export function DropzoneCard({
             setInputValue('');
         }
     }, [inputValue, onImageSelect]);
+
+    const handleWatermarkUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files && files.length > 0 && files[0].type === 'image/png') {
+            onWatermarkFileChange(files[0]);
+        }
+    }, [onWatermarkFileChange]);
 
     return (
         <motion.div
@@ -141,8 +157,8 @@ export function DropzoneCard({
                 </div>
 
                 {/* Controls row */}
-                <div className="mt-8 flex flex-col md:flex-row md:items-center gap-6">
-                    {/* Intensity slider */}
+                <div className="mt-8 flex flex-col gap-6">
+                    {/* Row 1: Intensity slider */}
                     <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
                             <label className="text-sm font-medium text-neutral-600">
@@ -161,33 +177,109 @@ export function DropzoneCard({
                         />
                     </div>
 
-                    {/* Metadata toggle */}
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => onMetadataPoisoningChange(!metadataPoisoning)}
-                            className={`relative w-14 h-8 rounded-full transition-colors ${metadataPoisoning ? 'bg-primary' : 'bg-neutral-300'
-                                }`}
-                            role="switch"
-                            aria-checked={metadataPoisoning}
-                            aria-label="Toggle metadata poisoning"
-                        >
-                            <motion.div
-                                className="absolute top-1 w-6 h-6 bg-white rounded-full shadow-md"
-                                animate={{ left: metadataPoisoning ? '1.75rem' : '0.25rem' }}
-                                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                            />
-                        </button>
-                        <div>
-                            <span className="text-sm font-medium text-neutral-600">
-                                Metadata Poisoning
-                            </span>
-                            <p className="text-xs text-neutral-400">
-                                Tiêm dữ liệu EXIF giả
-                            </p>
+                    {/* Row 2: Toggles */}
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        {/* Metadata toggle */}
+                        <div className="flex items-center gap-3 flex-1">
+                            <button
+                                onClick={() => onMetadataPoisoningChange(!metadataPoisoning)}
+                                className={`relative w-12 h-7 rounded-full transition-colors ${metadataPoisoning ? 'bg-primary' : 'bg-neutral-300'
+                                    }`}
+                                role="switch"
+                                aria-checked={metadataPoisoning}
+                                aria-label="Toggle metadata poisoning"
+                            >
+                                <motion.div
+                                    className="absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md"
+                                    animate={{ left: metadataPoisoning ? '1.375rem' : '0.125rem' }}
+                                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                                />
+                            </button>
+                            <div>
+                                <span className="text-sm font-medium text-neutral-600">
+                                    Metadata Poisoning
+                                </span>
+                                <p className="text-xs text-neutral-400">
+                                    Tiêm dữ liệu EXIF giả
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Watermark toggle */}
+                        <div className="flex items-center gap-3 flex-1">
+                            <button
+                                onClick={() => onWatermarkEnabledChange(!watermarkEnabled)}
+                                className={`relative w-12 h-7 rounded-full transition-colors ${watermarkEnabled ? 'bg-accent-mint' : 'bg-neutral-300'
+                                    }`}
+                                role="switch"
+                                aria-checked={watermarkEnabled}
+                                aria-label="Toggle watermark"
+                            >
+                                <motion.div
+                                    className="absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md"
+                                    animate={{ left: watermarkEnabled ? '1.375rem' : '0.125rem' }}
+                                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                                />
+                            </button>
+                            <div>
+                                <span className="text-sm font-medium text-neutral-600">
+                                    Watermark chìm
+                                </span>
+                                <p className="text-xs text-neutral-400">
+                                    Thêm hoạ tiết bảo vệ
+                                </p>
+                            </div>
                         </div>
                     </div>
+
+                    {/* Watermark upload (shown when enabled) */}
+                    {watermarkEnabled && (
+                        <motion.div
+                            className="p-4 rounded-xl bg-accent-mint/10 border border-accent-mint/30"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                        >
+                            <p className="text-sm font-medium text-neutral-600 mb-3">
+                                Upload watermark (PNG trong suốt)
+                            </p>
+                            <div className="flex items-center gap-3">
+                                <input
+                                    ref={watermarkInputRef}
+                                    type="file"
+                                    accept="image/png"
+                                    onChange={handleWatermarkUpload}
+                                    className="hidden"
+                                />
+                                <button
+                                    onClick={() => watermarkInputRef.current?.click()}
+                                    className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg border border-neutral-300 text-sm text-neutral-600 hover:border-primary transition-colors"
+                                >
+                                    <ImagePlus className="w-4 h-4" />
+                                    Chọn file
+                                </button>
+                                {watermarkFile ? (
+                                    <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg border border-accent-mint text-sm">
+                                        <span className="text-neutral-600 truncate max-w-[150px]">
+                                            {watermarkFile.name}
+                                        </span>
+                                        <button
+                                            onClick={() => onWatermarkFileChange(null)}
+                                            className="text-neutral-400 hover:text-red-500 transition-colors"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <span className="text-xs text-neutral-400">
+                                        Hoặc dùng mặc định "© PixShade"
+                                    </span>
+                                )}
+                            </div>
+                        </motion.div>
+                    )}
                 </div>
-            </div >
-        </motion.div >
+            </div>
+        </motion.div>
     );
 }

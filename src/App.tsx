@@ -20,6 +20,8 @@ import './index.css';
 function App() {
   const [intensity, setIntensity] = useState(50);
   const [metadataPoisoning, setMetadataPoisoning] = useState(true);
+  const [watermarkEnabled, setWatermarkEnabled] = useState(false);
+  const [watermarkFile, setWatermarkFile] = useState<File | null>(null);
 
   // Original image state
   const [originalFile, setOriginalFile] = useState<File | Blob | null>(null);
@@ -81,9 +83,22 @@ function App() {
     setError(null);
 
     try {
+      // Prepare watermark bitmap if custom file uploaded
+      let watermarkBitmap: ImageBitmap | undefined;
+      if (watermarkEnabled && watermarkFile) {
+        watermarkBitmap = await createImageBitmap(watermarkFile);
+      }
+
       const result = await protectImage(originalFile, {
         intensity,
         metadataPoisoning,
+        watermark: watermarkEnabled ? {
+          enabled: true,
+          type: watermarkFile ? 'image' : 'text',
+          imageBitmap: watermarkBitmap,
+          opacity: 0.12,
+          scale: 0.5,
+        } : undefined,
       });
 
       // Cleanup previous protected URL
@@ -97,7 +112,7 @@ function App() {
     } finally {
       setIsProcessing(false);
     }
-  }, [originalFile, intensity, metadataPoisoning, protectedResult]);
+  }, [originalFile, intensity, metadataPoisoning, watermarkEnabled, watermarkFile, protectedResult]);
 
   const handleDownload = useCallback(() => {
     if (protectedResult) {
@@ -118,6 +133,10 @@ function App() {
           onIntensityChange={setIntensity}
           metadataPoisoning={metadataPoisoning}
           onMetadataPoisoningChange={setMetadataPoisoning}
+          watermarkEnabled={watermarkEnabled}
+          onWatermarkEnabledChange={setWatermarkEnabled}
+          watermarkFile={watermarkFile}
+          onWatermarkFileChange={setWatermarkFile}
           isProcessing={isProcessing}
         />
 

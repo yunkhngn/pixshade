@@ -18,7 +18,15 @@ export interface WorkerMessage {
         density?: number;
         lambda?: number;
         applyUniversal?: boolean;
-        patternUrl?: string; // URL to fetch universal pattern
+        patternUrl?: string;
+        watermark?: {
+            enabled: boolean;
+            type: 'text' | 'image';
+            text?: string;
+            watermarkBitmap?: ImageBitmap;
+            opacity?: number;
+            scale?: number;
+        };
     };
 }
 

@@ -5,6 +5,7 @@ import { applyMultiScaleDCT, applyTiledSignature, type DCTOptions } from './dct'
 import { fetchAndApplyUniversal } from './universal';
 import { injectSplitXMP } from './metadata';
 import { computePSNR } from './utils';
+import { applyTiledWatermark } from './watermark';
 
 declare const self: DedicatedWorkerGlobalScope;
 
@@ -76,6 +77,19 @@ self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
             console.log(`PSNR ${psnr.toFixed(2)} too low, retrying with alpha * 0.8`);
         }
 
+        // 4. Apply Watermark (if enabled)
+        if (options?.watermark?.enabled) {
+            const wmStart = performance.now();
+            finalImageData = applyTiledWatermark(finalImageData, {
+                type: options.watermark.type || 'text',
+                text: options.watermark.text,
+                imageBitmap: options.watermark.watermarkBitmap,
+                opacity: options.watermark.opacity ?? 0.12,
+                scale: options.watermark.scale ?? 1.0,
+            });
+            stats.stepsTimes.watermark = performance.now() - wmStart;
+        }
+
         // 5. Convert to Blob
         const blobStart = performance.now();
         const finalCanvas = new OffscreenCanvas(finalImageData.width, finalImageData.height);
@@ -87,7 +101,6 @@ self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
         // 6. Metadata Injection
         const metaStart = performance.now();
         const arrayBuffer = await blob.arrayBuffer();
-        // injectSplitXMP
         const finalBuffer = injectSplitXMP(arrayBuffer, initialSeed);
         const finalBlob = new Blob([finalBuffer], { type: 'image/png' });
         stats.stepsTimes.metadata = performance.now() - metaStart;
