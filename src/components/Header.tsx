@@ -90,9 +90,8 @@ export function Header() {
                         </motion.div>
                     </div>
                     <p className="text-neutral-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4">
-                        PixShade chạy hoàn toàn trên trình duyệt, sử dụng
-                        <strong> Multi-Scale DCT</strong> perturbation và
-                        <strong> Split-Metadata</strong> obfuscation để giữ an toàn cho ảnh của bạn.
+                        Bạn đã chán vì bị AI stole art quá nhiều để train?
+                        <br />Không sao, đã có <strong>PixShade</strong> để phù phép art của bạn!
                     </p>
                 </motion.div>
             </div>

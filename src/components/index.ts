@@ -6,4 +6,5 @@ export { FooterBar } from './FooterBar';
 export { SupportBanner } from './SupportBanner';
 export { PresetSelector } from './PresetSelector';
 export { BatchProgress } from './BatchProgress';
+export { QualityMetrics } from './QualityMetrics';
 export type { BatchFile, FileStatus } from './BatchProgress';

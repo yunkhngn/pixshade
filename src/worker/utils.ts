@@ -83,7 +83,73 @@ export function computePSNR(original: Uint8ClampedArray, modified: Uint8ClampedA
     return 10 * Math.log10((255 * 255) / mse);
 }
 
-export function quickSSIM(_original: Uint8ClampedArray, _modified: Uint8ClampedArray, _width: number, _height: number): number {
+/**
+ * Compute Structural Similarity Index (SSIM)
+ * Simplified version using 8x8 windows
+ */
+export function computeSSIM(
+    original: Uint8ClampedArray,
+    modified: Uint8ClampedArray,
+    width: number,
+    height: number
+): number {
+    const C1 = (0.01 * 255) ** 2;
+    const C2 = (0.03 * 255) ** 2;
+    const windowSize = 8;
 
-    return 0;
+    // Convert to grayscale arrays
+    const gray1 = new Float32Array(width * height);
+    const gray2 = new Float32Array(width * height);
+
+    for (let i = 0; i < width * height; i++) {
+        const idx = i * 4;
+        gray1[i] = 0.299 * original[idx] + 0.587 * original[idx + 1] + 0.114 * original[idx + 2];
+        gray2[i] = 0.299 * modified[idx] + 0.587 * modified[idx + 1] + 0.114 * modified[idx + 2];
+    }
+
+    let ssimSum = 0;
+    let windowCount = 0;
+
+    // Slide window across image
+    for (let y = 0; y <= height - windowSize; y += windowSize) {
+        for (let x = 0; x <= width - windowSize; x += windowSize) {
+            let mean1 = 0, mean2 = 0;
+            const n = windowSize * windowSize;
+
+            // Calculate means
+            for (let wy = 0; wy < windowSize; wy++) {
+                for (let wx = 0; wx < windowSize; wx++) {
+                    const idx = (y + wy) * width + (x + wx);
+                    mean1 += gray1[idx];
+                    mean2 += gray2[idx];
+                }
+            }
+            mean1 /= n;
+            mean2 /= n;
+
+            // Calculate variances and covariance
+            let var1 = 0, var2 = 0, covar = 0;
+            for (let wy = 0; wy < windowSize; wy++) {
+                for (let wx = 0; wx < windowSize; wx++) {
+                    const idx = (y + wy) * width + (x + wx);
+                    const d1 = gray1[idx] - mean1;
+                    const d2 = gray2[idx] - mean2;
+                    var1 += d1 * d1;
+                    var2 += d2 * d2;
+                    covar += d1 * d2;
+                }
+            }
+            var1 /= (n - 1);
+            var2 /= (n - 1);
+            covar /= (n - 1);
+
+            // SSIM formula
+            const numerator = (2 * mean1 * mean2 + C1) * (2 * covar + C2);
+            const denominator = (mean1 * mean1 + mean2 * mean2 + C1) * (var1 + var2 + C2);
+            ssimSum += numerator / denominator;
+            windowCount++;
+        }
+    }
+
+    return windowCount > 0 ? ssimSum / windowCount : 1;
 }

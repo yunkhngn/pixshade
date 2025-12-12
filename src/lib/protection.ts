@@ -25,6 +25,7 @@ export interface ProtectionResult {
     size: number;
     processingTime: number;
     psnr?: number;
+    ssim?: number;
 }
 
 /**
@@ -94,7 +95,8 @@ export async function protectImage(
                     url,
                     size: blob.size,
                     processingTime: stats?.processingTime || (performance.now() - startTime),
-                    psnr: stats?.psnr
+                    psnr: stats?.psnr,
+                    ssim: stats?.ssim
                 });
                 worker.terminate();
             }

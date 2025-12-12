@@ -8,6 +8,7 @@ import {
   SupportBanner,
   PresetSelector,
   BatchProgress,
+  QualityMetrics,
   type BatchFile,
 } from './components';
 import {
@@ -49,6 +50,7 @@ function App() {
   // Processing state
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
 
   // Generate unique ID
   const generateId = () => Math.random().toString(36).substr(2, 9);
@@ -265,6 +267,8 @@ function App() {
           <BatchProgress
             files={batchFiles}
             onRemove={handleRemoveFile}
+            onSelect={setSelectedFileId}
+            selectedId={selectedFileId || undefined}
             isProcessing={isProcessing}
           />
         </div>
@@ -286,6 +290,18 @@ function App() {
           onDownload={hasResults ? handleDownload : undefined}
           downloadLabel={batchResults.length > 1 ? `Tải ZIP (${completedCount} ảnh)` : undefined}
         />
+
+        {/* Quality Metrics */}
+        {protectedResult && (
+          <div className="max-w-3xl mx-auto">
+            <QualityMetrics
+              psnr={protectedResult.psnr}
+              ssim={protectedResult.ssim}
+              processingTime={protectedResult.processingTime}
+              size={protectedResult.size}
+            />
+          </div>
+        )}
       </main>
 
       <FooterBar onProtect={handleProtect} />

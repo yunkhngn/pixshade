@@ -41,6 +41,7 @@ export interface WorkerResponse {
     error?: string;
     stats?: {
         psnr: number;
+        ssim: number;
         estimatedSize: number;
         processingTime: number;
         stepsTimes: Record<string, number>;

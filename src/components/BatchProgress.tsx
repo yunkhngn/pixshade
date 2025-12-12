@@ -15,6 +15,8 @@ export interface BatchFile {
 interface BatchProgressProps {
     files: BatchFile[];
     onRemove?: (id: string) => void;
+    onSelect?: (id: string) => void;
+    selectedId?: string;
     isProcessing: boolean;
 }
 
@@ -32,7 +34,7 @@ function FileThumbnail({ file }: { file: File }) {
     );
 }
 
-export function BatchProgress({ files, onRemove, isProcessing }: BatchProgressProps) {
+export function BatchProgress({ files, onRemove, onSelect, selectedId, isProcessing }: BatchProgressProps) {
     if (files.length === 0) return null;
 
     const completedCount = files.filter(f => f.status === 'done').length;
@@ -69,57 +71,64 @@ export function BatchProgress({ files, onRemove, isProcessing }: BatchProgressPr
 
             {/* File list */}
             <div className="space-y-2 max-h-48 overflow-y-auto">
-                {files.map((file) => (
-                    <motion.div
-                        key={file.id}
-                        className="flex items-center gap-3 p-2 bg-white rounded-lg"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 10 }}
-                    >
-                        {/* Thumbnail */}
-                        <FileThumbnail file={file.file} />
+                {files.map((file) => {
+                    const isSelected = selectedId === file.id;
+                    return (
+                        <motion.div
+                            key={file.id}
+                            className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors ${isSelected
+                                ? 'bg-primary/10 border border-primary/30'
+                                : 'bg-white hover:bg-neutral-50'
+                                }`}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 10 }}
+                            onClick={() => onSelect?.(file.id)}
+                        >
+                            {/* Thumbnail */}
+                            <FileThumbnail file={file.file} />
 
-                        {/* File info */}
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm text-neutral-600 truncate">
-                                {file.file.name}
-                            </p>
-                            {file.status === 'processing' && (
-                                <div className="h-1 bg-neutral-200 rounded-full overflow-hidden mt-1">
-                                    <motion.div
-                                        className="h-full bg-primary"
-                                        animate={{ width: `${file.progress}%` }}
-                                    />
-                                </div>
-                            )}
-                            {file.error && (
-                                <p className="text-xs text-red-500 truncate">{file.error}</p>
-                            )}
-                        </div>
+                            {/* File info */}
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm text-neutral-600 truncate">
+                                    {file.file.name}
+                                </p>
+                                {file.status === 'processing' && (
+                                    <div className="h-1 bg-neutral-200 rounded-full overflow-hidden mt-1">
+                                        <motion.div
+                                            className="h-full bg-primary"
+                                            animate={{ width: `${file.progress}%` }}
+                                        />
+                                    </div>
+                                )}
+                                {file.error && (
+                                    <p className="text-xs text-red-500 truncate">{file.error}</p>
+                                )}
+                            </div>
 
-                        {/* Status icon */}
-                        <div className="flex-shrink-0">
-                            {file.status === 'pending' && !isProcessing && onRemove && (
-                                <button
-                                    onClick={() => onRemove(file.id)}
-                                    className="text-neutral-400 hover:text-red-500 transition-colors"
-                                >
-                                    <XCircle className="w-5 h-5" />
-                                </button>
-                            )}
-                            {file.status === 'processing' && (
-                                <Loader2 className="w-5 h-5 text-primary animate-spin" />
-                            )}
-                            {file.status === 'done' && (
-                                <CheckCircle className="w-5 h-5 text-green-500" />
-                            )}
-                            {file.status === 'error' && (
-                                <XCircle className="w-5 h-5 text-red-500" />
-                            )}
-                        </div>
-                    </motion.div>
-                ))}
+                            {/* Status icon */}
+                            <div className="flex-shrink-0">
+                                {file.status === 'pending' && !isProcessing && onRemove && (
+                                    <button
+                                        onClick={() => onRemove(file.id)}
+                                        className="text-neutral-400 hover:text-red-500 transition-colors"
+                                    >
+                                        <XCircle className="w-5 h-5" />
+                                    </button>
+                                )}
+                                {file.status === 'processing' && (
+                                    <Loader2 className="w-5 h-5 text-primary animate-spin" />
+                                )}
+                                {file.status === 'done' && (
+                                    <CheckCircle className="w-5 h-5 text-green-500" />
+                                )}
+                                {file.status === 'error' && (
+                                    <XCircle className="w-5 h-5 text-red-500" />
+                                )}
+                            </div>
+                        </motion.div>
+                    );
+                })}
             </div>
         </div>
     );

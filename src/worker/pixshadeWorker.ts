@@ -68,6 +68,10 @@ self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
             const psnr = computePSNR(originalData, finalImageData.data);
             stats.psnr = psnr;
 
+            // Compute SSIM
+            const { computeSSIM } = await import('./utils');
+            stats.ssim = computeSSIM(originalData, finalImageData.data, imageBitmap.width, imageBitmap.height);
+
             if (psnr >= 38 || attempt >= MAX_RETRIES) {
                 break;
             }
