@@ -27,6 +27,11 @@ export interface WorkerMessage {
             opacity?: number;
             scale?: number;
         };
+        styleProtection?: {
+            enableColorShift: boolean;
+            enableEdgeDisruption: boolean;
+            enableTextureConfusion: boolean;
+        };
     };
 }
 

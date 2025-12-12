@@ -6,6 +6,7 @@ import { fetchAndApplyUniversal } from './universal';
 import { injectSplitXMP } from './metadata';
 import { computePSNR } from './utils';
 import { applyTiledWatermark } from './watermark';
+import { applyStyleProtection } from './styleProtection';
 
 declare const self: DedicatedWorkerGlobalScope;
 
@@ -77,7 +78,21 @@ self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
             console.log(`PSNR ${psnr.toFixed(2)} too low, retrying with alpha * 0.8`);
         }
 
-        // 4. Apply Watermark (if enabled)
+        // 4. Apply Style Protection (if enabled - GLAZE-inspired)
+        if (options?.styleProtection) {
+            const styleStart = performance.now();
+            const styleIntensity = options?.alpha !== undefined ? options.alpha : 50;
+            finalImageData = applyStyleProtection(finalImageData, {
+                intensity: styleIntensity,
+                seed: initialSeed,
+                enableColorShift: options.styleProtection.enableColorShift,
+                enableEdgeDisruption: options.styleProtection.enableEdgeDisruption,
+                enableTextureConfusion: options.styleProtection.enableTextureConfusion,
+            });
+            stats.stepsTimes.styleProtection = performance.now() - styleStart;
+        }
+
+        // 5. Apply Watermark (if enabled)
         if (options?.watermark?.enabled) {
             const wmStart = performance.now();
             finalImageData = applyTiledWatermark(finalImageData, {

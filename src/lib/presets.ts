@@ -42,3 +42,5 @@ export const PRESETS: Record<PresetMode, PresetConfig> = {
 };
 
 export const DEFAULT_PRESET: PresetMode = 'standard';
+
+

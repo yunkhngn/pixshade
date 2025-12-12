@@ -13,6 +13,8 @@ interface DropzoneCardProps {
     onWatermarkFileChange: (file: File | null) => void;
     watermarkOpacity: number;
     onWatermarkOpacityChange: (value: number) => void;
+    styleProtection: boolean;
+    onStyleProtectionChange: (value: boolean) => void;
     isProcessing?: boolean;
     multiple?: boolean;
 }
@@ -28,6 +30,8 @@ export function DropzoneCard({
     onWatermarkFileChange,
     watermarkOpacity,
     onWatermarkOpacityChange,
+    styleProtection,
+    onStyleProtectionChange,
     isProcessing = false,
     multiple = false,
 }: DropzoneCardProps) {
@@ -212,6 +216,32 @@ export function DropzoneCard({
                                 </span>
                                 <p className="text-xs text-neutral-400">
                                     Thêm hoạ tiết bảo vệ
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Style Protection toggle */}
+                        <div className="flex items-center gap-3 flex-1">
+                            <button
+                                onClick={() => onStyleProtectionChange(!styleProtection)}
+                                className={`relative w-12 h-7 rounded-full transition-colors ${styleProtection ? 'bg-purple-500' : 'bg-neutral-300'
+                                    }`}
+                                role="switch"
+                                aria-checked={styleProtection}
+                                aria-label="Toggle style protection"
+                            >
+                                <motion.div
+                                    className="absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md"
+                                    animate={{ left: styleProtection ? '1.375rem' : '0.125rem' }}
+                                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                                />
+                            </button>
+                            <div>
+                                <span className="text-sm font-medium text-neutral-600">
+                                    Chống sao chép
+                                </span>
+                                <p className="text-xs text-neutral-400">
+                                    Bảo vệ style khỏi AI
                                 </p>
                             </div>
                         </div>

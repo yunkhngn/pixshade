@@ -199,6 +199,70 @@ export function HowItWorks() {
                     </div>
                 </motion.section>
 
+                {/* Step 3: Style Protection (GLAZE-inspired) */}
+                <motion.section
+                    className="mb-16"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.25 }}
+                >
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center">
+                            <Shield className="w-6 h-6 text-purple-600" />
+                        </div>
+                        <h2 className="text-2xl font-bold text-neutral-600">
+                            3. Bảo vệ Style (GLAZE-inspired)
+                        </h2>
+                    </div>
+
+                    <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8">
+                        <p className="text-neutral-500 mb-6">
+                            Lấy cảm hứng từ công cụ <strong>GLAZE</strong> của Đại học Chicago, chức năng này
+                            áp dụng các kỹ thuật <strong>adversarial perturbation</strong> để ngăn AI học và
+                            sao chép phong cách vẽ độc đáo của bạn.
+                        </p>
+
+                        <div className="grid md:grid-cols-3 gap-4 mb-6">
+                            <div className="p-4 rounded-xl bg-purple-50 border border-purple-200">
+                                <h4 className="font-semibold text-neutral-700 mb-2">
+                                    LAB Color Shift
+                                </h4>
+                                <p className="text-xs text-neutral-500">
+                                    Dịch chuyển màu sắc trong không gian LAB để làm AI
+                                    nhận diện sai style và bảng màu của tác phẩm.
+                                </p>
+                            </div>
+                            <div className="p-4 rounded-xl bg-purple-50 border border-purple-200">
+                                <h4 className="font-semibold text-neutral-700 mb-2">
+                                    Edge Disruption
+                                </h4>
+                                <p className="text-xs text-neutral-500">
+                                    Thêm nhiễu vào các đường nét mà AI dựa vào để
+                                    nhận diện phong cách vẽ độc đáo của bạn.
+                                </p>
+                            </div>
+                            <div className="p-4 rounded-xl bg-purple-50 border border-purple-200">
+                                <h4 className="font-semibold text-neutral-700 mb-2">
+                                    Texture Confusion
+                                </h4>
+                                <p className="text-xs text-neutral-500">
+                                    Tạo các mẫu nhiễu đa tần số để làm rối loạn
+                                    việc phân tích texture của AI models.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-cream rounded-xl p-4">
+                            <p className="text-sm text-neutral-500">
+                                <strong className="text-purple-600">Lưu ý:</strong> Đây là phiên bản client-side
+                                lấy cảm hứng từ GLAZE. Không giống GLAZE gốc cần GPU và deep learning models,
+                                PixShade sử dụng các thuật toán perturbation được thiết kế để chạy hoàn toàn
+                                trong trình duyệt của bạn.
+                            </p>
+                        </div>
+                    </div>
+                </motion.section>
+
                 {/* Privacy Section */}
                 <motion.section
                     className="mb-16"

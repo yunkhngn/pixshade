@@ -22,7 +22,12 @@ const PRESET_COLORS: Record<PresetMode, { bg: string; border: string; dot: strin
 
 export function PresetSelector({ value, onChange, disabled }: PresetSelectorProps) {
     return (
-        <div className="flex flex-col gap-2">
+        <motion.div
+            className="flex flex-col gap-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+        >
             <label className="text-sm font-medium text-neutral-600">
                 Chế độ bảo vệ
             </label>
@@ -33,14 +38,15 @@ export function PresetSelector({ value, onChange, disabled }: PresetSelectorProp
                     const isSelected = value === preset;
                     const colors = PRESET_COLORS[preset];
 
+
                     return (
                         <motion.button
                             key={preset}
                             onClick={() => onChange(preset)}
                             disabled={disabled}
                             className={`relative p-3 rounded-xl border-2 text-left overflow-hidden ${isSelected
-                                    ? `${colors.bg} ${colors.border}`
-                                    : 'bg-white border-neutral-200 hover:border-neutral-300'
+                                ? `${colors.bg} ${colors.border}`
+                                : 'bg-white border-neutral-200 hover:border-neutral-300'
                                 } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                             whileHover={disabled ? {} : { scale: 1.02 }}
                             whileTap={disabled ? {} : { scale: 0.98 }}
@@ -96,6 +102,6 @@ export function PresetSelector({ value, onChange, disabled }: PresetSelectorProp
                     );
                 })}
             </div>
-        </div>
+        </motion.div>
     );
 }

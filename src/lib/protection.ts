@@ -12,6 +12,11 @@ export interface ProtectionOptions {
         opacity?: number;
         scale?: number;
     };
+    styleProtection?: {
+        enableColorShift: boolean;
+        enableEdgeDisruption: boolean;
+        enableTextureConfusion: boolean;
+    };
 }
 
 export interface ProtectionResult {
@@ -70,6 +75,7 @@ export async function protectImage(
                     opacity: options.watermark.opacity,
                     scale: options.watermark.scale,
                 } : undefined,
+                styleProtection: options.styleProtection,
             }
         };
 
