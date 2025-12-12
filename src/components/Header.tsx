@@ -1,4 +1,4 @@
-import { Sparkles, Github, Info } from 'lucide-react';
+import { Sparkles, Github, Coffee } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const SparkleIcon = () => (
@@ -32,13 +32,13 @@ export function Header() {
 
                     {/* Right icons */}
                     <motion.div
-                        className="flex items-center gap-4"
+                        className="flex items-center gap-3"
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
                     >
                         <a
-                            href="https://github.com"
+                            href="https://github.com/yunkhngn"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 rounded-full hover:bg-neutral-300/30 transition-colors"
@@ -46,12 +46,18 @@ export function Header() {
                         >
                             <Github className="w-5 h-5 text-neutral-600" />
                         </a>
-                        <button
-                            className="p-2 rounded-full hover:bg-neutral-300/30 transition-colors"
-                            aria-label="About PixShade"
+                        <motion.a
+                            href="https://buymeacoffee.com/yunkhngn"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-4 py-2 bg-[#FFDD00] hover:bg-[#FFCC00] text-neutral-800 font-semibold rounded-full shadow-soft transition-colors text-sm"
+                            aria-label="Buy me a coffee"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            <Info className="w-5 h-5 text-neutral-600" />
-                        </button>
+                            <Coffee className="w-4 h-4" />
+                            <span className="hidden sm:inline">Buy me a coffee</span>
+                        </motion.a>
                     </motion.div>
                 </div>
 
