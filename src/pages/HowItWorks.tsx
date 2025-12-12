@@ -164,8 +164,7 @@ export function HowItWorks() {
                     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8">
                         <p className="text-neutral-500 mb-6">
                             Các trình thu thập dữ liệu (AI scrapers) thường lấy cả metadata EXIF và XMP (thông tin máy ảnh, vị trí,
-                            ngày tháng, v.v.) cùng với hình ảnh. Chúng tôi sử dụng kỹ thuật <strong>Split XMP Injection</strong>
-                            để phân tán metadata giả mạo qua nhiều phân đoạn (chunks), khiến việc loại bỏ chúng
+                            ngày tháng, v.v.) cùng với hình ảnh. Chúng tôi sử dụng kỹ thuật <strong>Split XMP Injection</strong> để phân tán metadata giả mạo qua nhiều phân đoạn (chunks), khiến việc loại bỏ chúng
                             bằng lập trình trở nên khó khăn hơn trong khi vẫn hợp lệ với các trình đọc tiêu chuẩn.
                         </p>
 

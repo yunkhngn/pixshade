@@ -1,4 +1,4 @@
-import { Sparkles, Github, Coffee } from 'lucide-react';
+import { Sparkles, Github, Coffee, WifiOff, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const SparkleIcon = () => (
@@ -93,6 +93,23 @@ export function Header() {
                         Bạn đã chán vì bị AI stole art quá nhiều để train?
                         <br />Không sao, đã có <strong>PixShade</strong> để phù phép art của bạn!
                     </p>
+
+                    {/* PWA Install Badge */}
+                    <motion.div
+                        className="flex items-center justify-center gap-2 sm:gap-4 mt-4 sm:mt-6"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.4 }}
+                    >
+                        <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2.5 bg-accent-mint/30 rounded-full border border-accent-mint/50 shadow-soft">
+                            <Download className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
+                            <span className="text-xs sm:text-sm font-semibold text-green-700">Cài đặt</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2.5 bg-primary/15 rounded-full border border-primary/30 shadow-soft">
+                            <WifiOff className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                            <span className="text-xs sm:text-sm font-semibold text-primary">Xài offline</span>
+                        </div>
+                    </motion.div>
                 </motion.div>
             </div>
         </header>
