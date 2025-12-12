@@ -70,10 +70,10 @@ export function DropzoneCard({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
         >
-            <div className="bg-white rounded-2xl shadow-card p-6 md:p-8">
+            <div className="bg-white rounded-2xl shadow-card p-4 sm:p-6 md:p-8">
                 {/* Dropzone area */}
                 <motion.div
-                    className={`relative border-2 border-dashed rounded-2xl p-8 md:p-12 text-center transition-all duration-200 ${isDragging
+                    className={`relative border-2 border-dashed rounded-2xl p-6 sm:p-8 md:p-12 text-center transition-all duration-200 ${isDragging
                         ? 'border-primary bg-primary/5 scale-[1.02]'
                         : 'border-neutral-300 hover:border-primary/50'
                         }`}
@@ -109,7 +109,7 @@ export function DropzoneCard({
                 </motion.div>
 
                 {/* URL input */}
-                <div className="mt-6 flex gap-3">
+                <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3">
                     <div className="flex-1 relative">
                         <Link className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
                         <input
@@ -117,16 +117,16 @@ export function DropzoneCard({
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             placeholder="Or paste an image URL..."
-                            className="w-full pl-12 pr-4 py-3 rounded-xl bg-cream border border-neutral-300/50 text-neutral-600 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                            className="w-full pl-12 pr-4 py-3 rounded-xl bg-cream border border-neutral-300/50 text-neutral-600 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all text-sm sm:text-base"
                             onKeyDown={(e) => e.key === 'Enter' && handleUrlSubmit()}
                         />
                     </div>
                     <motion.button
                         onClick={onProtect}
                         disabled={isProcessing}
-                        className={`px-8 py-3 text-white font-semibold rounded-xl shadow-soft flex items-center gap-2 transition-colors ${isProcessing
-                                ? 'bg-primary/70 cursor-not-allowed'
-                                : 'bg-primary hover:bg-primary-600'
+                        className={`w-full sm:w-auto px-6 sm:px-8 py-3 text-white font-semibold rounded-xl shadow-soft flex items-center justify-center gap-2 transition-colors ${isProcessing
+                            ? 'bg-primary/70 cursor-not-allowed'
+                            : 'bg-primary hover:bg-primary-600'
                             }`}
                         whileHover={isProcessing ? {} : { scale: 1.02 }}
                         whileTap={isProcessing ? {} : { scale: 0.98 }}
@@ -187,7 +187,7 @@ export function DropzoneCard({
                         </div>
                     </div>
                 </div>
-            </div>
-        </motion.div>
+            </div >
+        </motion.div >
     );
 }

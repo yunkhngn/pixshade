@@ -19,13 +19,13 @@ export function Header() {
                 <div className="flex items-center justify-between mb-8">
                     {/* Logo */}
                     <motion.div
-                        className="flex items-center gap-2"
+                        className="flex items-center gap-1.5 sm:gap-2"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                     >
                         <SparkleIcon />
-                        <span className="text-2xl font-bold text-primary font-display">
+                        <span className="text-xl sm:text-2xl font-bold text-primary font-display">
                             PixShade
                         </span>
                     </motion.div>
@@ -68,8 +68,8 @@ export function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <div className="relative inline-block mb-4">
-                        <h1 className="text-4xl md:text-5xl font-bold text-neutral-600 font-display">
+                    <div className="relative inline-block mb-4 px-4">
+                        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-neutral-600 font-display leading-tight">
                             Protect your images from{' '}
                             <span className="text-primary">AI training</span>
                         </h1>
@@ -89,7 +89,7 @@ export function Header() {
                             <Sparkles className="w-4 h-4" />
                         </motion.div>
                     </div>
-                    <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
+                    <p className="text-neutral-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4">
                         PixShade runs fully in your browser using frequency-domain
                         perturbation and metadata obfuscation.
                     </p>

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Image, Clock, FileOutput, Download, ArrowRight } from 'lucide-react';
+import { Image, Clock, FileOutput, Download, ArrowRight, ArrowDown } from 'lucide-react';
 
 interface PreviewBoxProps {
     originalUrl?: string;
@@ -22,22 +22,23 @@ export function PreviewBox({
 
     return (
         <motion.div
-            className="w-full max-w-3xl mx-auto mt-6"
+            className="w-full max-w-3xl mx-auto mt-4 sm:mt-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
         >
-            <div className="bg-white rounded-2xl shadow-soft p-5">
-                <div className="flex flex-col md:flex-row gap-5">
+            <div className="bg-white rounded-2xl shadow-soft p-4 sm:p-5">
+                <div className="flex flex-col gap-4 sm:gap-5">
                     {/* Before/After Preview */}
                     <div className="flex-1">
-                        <div className="flex gap-4">
+                        {/* Mobile: Vertical layout */}
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                             {/* Original image */}
                             <div className="flex-1">
                                 <p className="text-xs font-medium text-neutral-400 mb-2 text-center">
                                     Original
                                 </p>
-                                <div className="aspect-square rounded-xl bg-cream border border-neutral-300/30 overflow-hidden flex items-center justify-center relative">
+                                <div className="aspect-video sm:aspect-square rounded-xl bg-cream border border-neutral-300/30 overflow-hidden flex items-center justify-center relative">
                                     {originalUrl ? (
                                         <motion.img
                                             src={originalUrl}
@@ -49,15 +50,16 @@ export function PreviewBox({
                                         />
                                     ) : (
                                         <div className="text-center text-neutral-400">
-                                            <Image className="w-8 h-8 mx-auto opacity-50" />
+                                            <Image className="w-6 h-6 sm:w-8 sm:h-8 mx-auto opacity-50" />
                                         </div>
                                     )}
                                 </div>
                             </div>
 
-                            {/* Arrow */}
-                            <div className="flex items-center justify-center">
-                                <ArrowRight className="w-5 h-5 text-neutral-300" />
+                            {/* Arrow - different for mobile/desktop */}
+                            <div className="flex items-center justify-center py-1 sm:py-0">
+                                <ArrowDown className="w-5 h-5 text-neutral-300 sm:hidden" />
+                                <ArrowRight className="w-5 h-5 text-neutral-300 hidden sm:block" />
                             </div>
 
                             {/* Protected image */}
@@ -65,7 +67,7 @@ export function PreviewBox({
                                 <p className="text-xs font-medium text-primary mb-2 text-center">
                                     Protected
                                 </p>
-                                <div className="aspect-square rounded-xl bg-cream border border-primary/30 overflow-hidden flex items-center justify-center relative">
+                                <div className="aspect-video sm:aspect-square rounded-xl bg-cream border border-primary/30 overflow-hidden flex items-center justify-center relative">
                                     {protectedUrl ? (
                                         <motion.img
                                             src={protectedUrl}
@@ -77,12 +79,12 @@ export function PreviewBox({
                                         />
                                     ) : isProcessing ? (
                                         <div className="text-center text-primary">
-                                            <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
+                                            <div className="w-6 h-6 sm:w-8 sm:h-8 border-3 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
                                             <p className="text-xs mt-2">Processing...</p>
                                         </div>
                                     ) : (
                                         <div className="text-center text-neutral-400">
-                                            <Image className="w-8 h-8 mx-auto opacity-50" />
+                                            <Image className="w-6 h-6 sm:w-8 sm:h-8 mx-auto opacity-50" />
                                         </div>
                                     )}
                                 </div>
@@ -90,23 +92,23 @@ export function PreviewBox({
                         </div>
                     </div>
 
-                    {/* Info panel */}
-                    <div className="md:w-48 flex flex-row md:flex-col gap-4">
-                        <div className="flex-1 p-3 rounded-xl bg-cream">
-                            <div className="flex items-center gap-2 text-neutral-400 mb-1">
-                                <FileOutput className="w-4 h-4" />
-                                <span className="text-xs font-medium">Output Size</span>
+                    {/* Info panel - horizontal on mobile, vertical on desktop */}
+                    <div className="flex flex-row sm:flex-row gap-3">
+                        <div className="flex-1 p-2.5 sm:p-3 rounded-xl bg-cream">
+                            <div className="flex items-center gap-1.5 sm:gap-2 text-neutral-400 mb-0.5 sm:mb-1">
+                                <FileOutput className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                <span className="text-xs font-medium">Size</span>
                             </div>
-                            <p className="text-sm font-semibold text-neutral-600">
+                            <p className="text-xs sm:text-sm font-semibold text-neutral-600">
                                 {outputSize || '—'}
                             </p>
                         </div>
-                        <div className="flex-1 p-3 rounded-xl bg-cream">
-                            <div className="flex items-center gap-2 text-neutral-400 mb-1">
-                                <Clock className="w-4 h-4" />
-                                <span className="text-xs font-medium">Processing Time</span>
+                        <div className="flex-1 p-2.5 sm:p-3 rounded-xl bg-cream">
+                            <div className="flex items-center gap-1.5 sm:gap-2 text-neutral-400 mb-0.5 sm:mb-1">
+                                <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                <span className="text-xs font-medium">Time</span>
                             </div>
-                            <p className="text-sm font-semibold text-neutral-600">
+                            <p className="text-xs sm:text-sm font-semibold text-neutral-600">
                                 {processingTime || '—'}
                             </p>
                         </div>
@@ -115,14 +117,14 @@ export function PreviewBox({
                         {onDownload && (
                             <motion.button
                                 onClick={onDownload}
-                                className="w-full p-3 rounded-xl bg-primary text-white font-semibold flex items-center justify-center gap-2 hover:bg-primary-600 transition-colors"
+                                className="flex-1 sm:flex-none p-2.5 sm:p-3 sm:px-6 rounded-xl bg-primary text-white font-semibold flex items-center justify-center gap-2 hover:bg-primary-600 transition-colors text-sm"
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
                                 <Download className="w-4 h-4" />
-                                Download
+                                <span className="hidden sm:inline">Download</span>
                             </motion.button>
                         )}
                     </div>
@@ -130,7 +132,7 @@ export function PreviewBox({
 
                 {/* Info message when no image */}
                 {!hasImage && (
-                    <p className="text-center text-neutral-400 text-sm mt-4">
+                    <p className="text-center text-neutral-400 text-xs sm:text-sm mt-3 sm:mt-4">
                         Select an image to see the before/after comparison
                     </p>
                 )}
