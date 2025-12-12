@@ -173,19 +173,21 @@ export function HowItWorks() {
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {[
-                                { label: 'Camera', value: 'Nokia 3310', icon: '📱' },
-                                { label: 'Location', value: 'North Pole', icon: '📍' },
-                                { label: 'Date', value: 'January 1, 1995', icon: '📅' },
-                                { label: 'Software', value: 'MS Paint 3.11', icon: '🎨' },
-                                { label: 'Copyright', value: 'Public Domain 1901', icon: '©️' },
-                                { label: 'Artist', value: 'AI Generated', icon: '🤖' },
-                            ].map((item) => (
+                                { label: 'Camera', value: 'Nokia 3310' },
+                                { label: 'Location', value: 'North Pole' },
+                                { label: 'Date', value: 'January 1, 1995' },
+                                { label: 'Software', value: 'MS Paint 3.11' },
+                                { label: 'Copyright', value: 'Public Domain 1901' },
+                                { label: 'Artist', value: 'AI Generated' },
+                            ].map((item, idx) => (
                                 <div
                                     key={item.label}
                                     className="p-4 rounded-xl bg-cream border border-neutral-300/30"
                                 >
                                     <div className="flex items-center gap-2 mb-1">
-                                        <span>{item.icon}</span>
+                                        <div className="w-5 h-5 rounded bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">
+                                            {idx + 1}
+                                        </div>
                                         <span className="text-xs font-medium text-neutral-400">
                                             {item.label}
                                         </span>

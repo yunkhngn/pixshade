@@ -26,7 +26,7 @@ export function SupportBanner() {
                     whileTap={{ scale: 0.95 }}
                 >
                     <Coffee className="w-4 h-4" />
-                    Buy me a coffee ☕
+                    Buy me a coffee
                 </motion.a>
             </div>
         </motion.div>
