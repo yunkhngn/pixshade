@@ -20,7 +20,7 @@ export function ExampleChips({ onSelectExample }: ExampleChipsProps) {
             transition={{ duration: 0.5, delay: 0.5 }}
         >
             <span className="text-sm text-neutral-400 mr-2 self-center">
-                Try an example:
+                Dùng thử ví dụ:
             </span>
             {examples.map((example, index) => {
                 const Icon = example.icon;

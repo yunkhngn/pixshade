@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Coffee, Heart, ArrowRight } from 'lucide-react';
+import { Coffee, Heart } from 'lucide-react';
 
 export function SupportBanner() {
     return (
@@ -9,11 +9,11 @@ export function SupportBanner() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
         >
-            <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+            <div className="max-w-5xl mx-auto flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
                 <div className="flex items-center gap-2 text-neutral-800 text-sm sm:text-base">
                     <Heart className="w-4 h-4 fill-current" />
                     <span className="font-medium text-center">
-                        <span className="hidden sm:inline">Nếu PixShade giúp cậu, có thể support cho tớ!</span>
+                        Nếu PixShade giúp cậu, có thể support cho tớ!
                     </span>
                 </div>
                 <motion.a

@@ -56,7 +56,7 @@ function App() {
         const blob = await response.blob();
         setOriginalFile(blob);
       } catch {
-        setError('Failed to load image from URL');
+        setError('Không thể tải ảnh từ URL');
       }
     }
   }, [originalUrl, protectedResult]);
@@ -73,7 +73,7 @@ function App() {
 
   const handleProtect = useCallback(async () => {
     if (!originalFile) {
-      setError('Please select an image first');
+      setError('Vui lòng chọn ảnh trước');
       return;
     }
 
@@ -93,7 +93,7 @@ function App() {
 
       setProtectedResult(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to protect image');
+      setError(err instanceof Error ? err.message : 'Không thể bảo vệ ảnh');
     } finally {
       setIsProcessing(false);
     }
