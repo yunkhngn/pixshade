@@ -1,23 +1,13 @@
-/**
- * Watermark Module
- * Applies a semi-transparent tiled watermark pattern to images.
- * Supports both text-based and custom image watermarks.
- */
-
 export interface WatermarkOptions {
     type: 'text' | 'image';
     text?: string;
     imageBitmap?: ImageBitmap;
-    opacity: number; // 0.0 - 1.0
-    scale?: number; // Scale factor for the watermark (default: 1.0)
-    angle?: number; // Rotation angle in degrees (default: -30)
-    spacing?: number; // Spacing between tiles (default: 50)
+    opacity: number;
+    scale?: number;
+    angle?: number;
+    spacing?: number;
 }
 
-/**
- * Apply a tiled watermark pattern to an ImageData object.
- * The watermark is rendered diagonally and repeated across the entire image.
- */
 export function applyTiledWatermark(
     sourceData: ImageData,
     options: WatermarkOptions

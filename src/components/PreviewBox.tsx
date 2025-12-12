@@ -8,6 +8,7 @@ interface PreviewBoxProps {
     outputSize?: string;
     processingTime?: string;
     onDownload?: () => void;
+    downloadLabel?: string;
 }
 
 export function PreviewBox({
@@ -17,6 +18,7 @@ export function PreviewBox({
     outputSize,
     processingTime,
     onDownload,
+    downloadLabel,
 }: PreviewBoxProps) {
     const hasImage = originalUrl || protectedUrl;
 
@@ -124,7 +126,7 @@ export function PreviewBox({
                                 whileTap={{ scale: 0.98 }}
                             >
                                 <Download className="w-4 h-4" />
-                                <span className="hidden sm:inline">Tải về</span>
+                                <span className="hidden sm:inline">{downloadLabel || 'Tải về'}</span>
                             </motion.button>
                         )}
                     </div>

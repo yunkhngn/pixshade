@@ -3,10 +3,8 @@ import { Upload, Link, Shield, Loader2, ImagePlus, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface DropzoneCardProps {
-    onImageSelect?: (file: File | string) => void;
+    onImageSelect?: (file: File | File[] | string) => void;
     onProtect?: () => void;
-    intensity: number;
-    onIntensityChange: (value: number) => void;
     metadataPoisoning: boolean;
     onMetadataPoisoningChange: (value: boolean) => void;
     watermarkEnabled: boolean;
@@ -16,13 +14,12 @@ interface DropzoneCardProps {
     watermarkOpacity: number;
     onWatermarkOpacityChange: (value: number) => void;
     isProcessing?: boolean;
+    multiple?: boolean;
 }
 
 export function DropzoneCard({
     onImageSelect,
     onProtect,
-    intensity,
-    onIntensityChange,
     metadataPoisoning,
     onMetadataPoisoningChange,
     watermarkEnabled,
@@ -32,6 +29,7 @@ export function DropzoneCard({
     watermarkOpacity,
     onWatermarkOpacityChange,
     isProcessing = false,
+    multiple = false,
 }: DropzoneCardProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [inputValue, setInputValue] = useState('');
@@ -51,22 +49,23 @@ export function DropzoneCard({
         (e: React.DragEvent) => {
             e.preventDefault();
             setIsDragging(false);
-            const files = e.dataTransfer.files;
-            if (files.length > 0 && files[0].type.startsWith('image/')) {
-                onImageSelect?.(files[0]);
+            const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+            if (files.length > 0) {
+                onImageSelect?.(multiple ? files : files[0]);
             }
         },
-        [onImageSelect]
+        [onImageSelect, multiple]
     );
 
     const handleFileInput = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             const files = e.target.files;
             if (files && files.length > 0) {
-                onImageSelect?.(files[0]);
+                const fileArray = Array.from(files);
+                onImageSelect?.(multiple ? fileArray : fileArray[0]);
             }
         },
-        [onImageSelect]
+        [onImageSelect, multiple]
     );
 
     const handleUrlSubmit = useCallback(() => {
@@ -106,6 +105,7 @@ export function DropzoneCard({
                     <input
                         type="file"
                         accept="image/*"
+                        multiple={multiple}
                         onChange={handleFileInput}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         aria-label="Upload image file"
@@ -162,26 +162,7 @@ export function DropzoneCard({
 
                 {/* Controls row */}
                 <div className="mt-8 flex flex-col gap-6">
-                    {/* Row 1: Intensity slider */}
-                    <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                            <label className="text-sm font-medium text-neutral-600">
-                                Cường độ nhiễu
-                            </label>
-                            <span className="text-sm font-bold text-primary">{intensity}%</span>
-                        </div>
-                        <input
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={intensity}
-                            onChange={(e) => onIntensityChange(Number(e.target.value))}
-                            className="w-full"
-                            aria-label={`Cường độ nhiễu: ${intensity}%`}
-                        />
-                    </div>
-
-                    {/* Row 2: Toggles */}
+                    {/* Row 1: Toggles */}
                     <div className="flex flex-col sm:flex-row gap-4">
                         {/* Metadata toggle */}
                         <div className="flex items-center gap-3 flex-1">
