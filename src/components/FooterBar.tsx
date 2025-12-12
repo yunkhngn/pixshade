@@ -20,7 +20,8 @@ export function FooterBar({ onProtect }: FooterBarProps) {
                     <div className="flex items-center gap-2 text-neutral-400 text-sm">
                         <Lock className="w-4 h-4" />
                         <span>
-                            All processing runs in your browser. No upload involved.
+                            Toàn bộ xử lý chạy trên trình duyệt. Không tải video/ảnh lên máy chủ.
+                            <br />Ảnh của cậu chắc chắn không bị feed cho tớ!
                         </span>
                     </div>
 
@@ -30,7 +31,7 @@ export function FooterBar({ onProtect }: FooterBarProps) {
                         className="flex items-center gap-2 text-neutral-400 hover:text-primary text-sm transition-colors"
                     >
                         <HelpCircle className="w-4 h-4" />
-                        How it works
+                        Cách hoạt động?
                     </Link>
 
                     {/* Secondary CTA */}
@@ -41,14 +42,14 @@ export function FooterBar({ onProtect }: FooterBarProps) {
                         whileTap={{ scale: 0.98 }}
                     >
                         <Shield className="w-4 h-4" />
-                        Protect Image
+                        Bảo vệ ảnh
                     </motion.button>
                 </div>
 
                 {/* Branding */}
                 <div className="mt-6 text-center text-neutral-400 text-xs">
                     <p className="flex items-center justify-center gap-2 flex-wrap">
-                        Made with <Heart className="w-3 h-3 text-red-400 fill-current" /> by{' '}
+                        Tác giả <Heart className="w-3 h-3 text-red-400 fill-current" /> Summer{' '}
                         <a
                             href="https://github.com/yunkhngn"
                             target="_blank"

@@ -99,11 +99,11 @@ export function DropzoneCard({
                             <Upload className="w-8 h-8 text-primary" />
                         </motion.div>
                         <p className="text-neutral-600 text-lg mb-2">
-                            Drop an image or{' '}
-                            <span className="text-primary font-medium">browse</span>
+                            Kéo thả ảnh hoặc{' '}
+                            <span className="text-primary font-medium">chọn từ máy</span>
                         </p>
                         <p className="text-neutral-400 text-sm">
-                            Supports PNG, JPG, WebP up to 10MB
+                            Hỗ trợ PNG, JPG, WebP tối đa 10MB
                         </p>
                     </div>
                 </motion.div>
@@ -116,7 +116,7 @@ export function DropzoneCard({
                             type="url"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
-                            placeholder="Or paste an image URL..."
+                            placeholder="Hoặc dán URL ảnh..."
                             className="w-full pl-12 pr-4 py-3 rounded-xl bg-cream border border-neutral-300/50 text-neutral-600 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all text-sm sm:text-base"
                             onKeyDown={(e) => e.key === 'Enter' && handleUrlSubmit()}
                         />
@@ -136,7 +136,7 @@ export function DropzoneCard({
                         ) : (
                             <Shield className="w-5 h-5" />
                         )}
-                        {isProcessing ? 'Processing...' : 'Protect'}
+                        {isProcessing ? 'Đang xử lý...' : 'Bảo vệ ngay'}
                     </motion.button>
                 </div>
 
@@ -146,7 +146,7 @@ export function DropzoneCard({
                     <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
                             <label className="text-sm font-medium text-neutral-600">
-                                Perturbation strength
+                                Cường độ nhiễu
                             </label>
                             <span className="text-sm font-bold text-primary">{intensity}%</span>
                         </div>
@@ -157,7 +157,7 @@ export function DropzoneCard({
                             value={intensity}
                             onChange={(e) => onIntensityChange(Number(e.target.value))}
                             className="w-full"
-                            aria-label={`Perturbation strength: ${intensity}%`}
+                            aria-label={`Cường độ nhiễu: ${intensity}%`}
                         />
                     </div>
 
@@ -182,7 +182,7 @@ export function DropzoneCard({
                                 Metadata Poisoning
                             </span>
                             <p className="text-xs text-neutral-400">
-                                Inject misleading EXIF data
+                                Tiêm dữ liệu EXIF giả
                             </p>
                         </div>
                     </div>

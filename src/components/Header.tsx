@@ -42,7 +42,7 @@ export function Header() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 rounded-full hover:bg-neutral-300/30 transition-colors"
-                            aria-label="View on GitHub"
+                            aria-label="Xem trên GitHub"
                         >
                             <Github className="w-5 h-5 text-neutral-600" />
                         </a>
@@ -51,12 +51,12 @@ export function Header() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 px-4 py-2 bg-[#FFDD00] hover:bg-[#FFCC00] text-neutral-800 font-semibold rounded-full shadow-soft transition-colors text-sm"
-                            aria-label="Buy me a coffee"
+                            aria-label="Ủng hộ Khoa"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
                             <Coffee className="w-4 h-4" />
-                            <span className="hidden sm:inline">Buy me a coffee</span>
+                            <span className="hidden sm:inline">Ủng hộ Khoa</span>
                         </motion.a>
                     </motion.div>
                 </div>
@@ -70,7 +70,7 @@ export function Header() {
                 >
                     <div className="relative inline-block mb-4 px-4">
                         <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-neutral-600 font-display leading-tight">
-                            Protect your images from{' '}
+                            Bảo vệ ảnh của bạn khỏi{' '}
                             <span className="text-primary">AI training</span>
                         </h1>
                         {/* Decorative sparkles */}
@@ -90,9 +90,9 @@ export function Header() {
                         </motion.div>
                     </div>
                     <p className="text-neutral-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4">
-                        PixShade runs fully in your browser, utilizing
-                        <strong> Multi-Scale DCT</strong> perturbation and
-                        <strong> Split-Metadata</strong> obfuscation to keep your photos safe.
+                        PixShade chạy hoàn toàn trên trình duyệt, sử dụng
+                        <strong> Multi-Scale DCT</strong> perturbation và
+                        <strong> Split-Metadata</strong> obfuscation để giữ an toàn cho ảnh của bạn.
                     </p>
                 </motion.div>
             </div>

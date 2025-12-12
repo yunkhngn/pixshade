@@ -23,7 +23,7 @@ export function HowItWorks() {
                         className="inline-flex items-center gap-2 text-neutral-600 hover:text-primary transition-colors"
                     >
                         <ArrowLeft className="w-5 h-5" />
-                        <span>Back to PixShade</span>
+                        <span>Quay lại PixShade</span>
                     </Link>
                 </div>
             </header>
@@ -37,11 +37,11 @@ export function HowItWorks() {
                     transition={{ duration: 0.5 }}
                 >
                     <h1 className="text-3xl md:text-4xl font-bold text-neutral-600 font-display mb-4">
-                        How <span className="text-primary">PixShade</span> Works
+                        Cách <span className="text-primary">PixShade</span> Hoạt Động
                     </h1>
                     <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
-                        Learn how we protect your images from AI training using advanced
-                        frequency-domain perturbation and metadata obfuscation.
+                        Tìm hiểu cách chúng tôi bảo vệ ảnh của bạn khỏi AI training bằng các kỹ thuật
+                        frequency-domain perturbation và metadata obfuscation tiên tiến.
                     </p>
                 </motion.div>
 
@@ -57,7 +57,7 @@ export function HowItWorks() {
                             <Waves className="w-6 h-6 text-primary" />
                         </div>
                         <h2 className="text-2xl font-bold text-neutral-600">
-                            1. Advanced Frequency Protection
+                            1. Bảo vệ Tần số Nâng cao
                         </h2>
                     </div>
 
@@ -68,35 +68,34 @@ export function HowItWorks() {
                                     Multi-Scale DCT Perturbation
                                 </h3>
                                 <p className="text-neutral-500 mb-4 text-sm leading-relaxed">
-                                    We use a <strong>Multi-Scale Discrete Cosine Transform (DCT)</strong> approach
-                                    to apply protective noise across various frequency bands. By operating on
-                                    multiple scales (16x16, 8x8, and 4x4 blocks), we target both broad structures
-                                    and fine details, making it significantly harder for AI models to reconstruct
-                                    the original image features.
+                                    Chúng tôi sử dụng phương pháp <strong>Multi-Scale Discrete Cosine Transform (DCT)</strong>
+                                    để áp dụng nhiễu bảo vệ trên nhiều dải tần số. Bằng cách hoạt động trên nhiều
+                                    quy mô (khối 16x16, 8x8 và 4x4), chúng tôi nhắm mục tiêu cả cấu trúc rộng
+                                    và chi tiết nhỏ, khiến các mô hình AI khó khôi phục lại các đặc điểm hình ảnh gốc.
                                 </p>
                                 <h3 className="text-lg font-semibold text-neutral-600 mb-3">
                                     Tiled Signature & Universal Patterns
                                 </h3>
                                 <p className="text-neutral-500 mb-4 text-sm leading-relaxed">
-                                    To resist template matching and removal attacks, we inject a
-                                    <strong> deterministic tiled signature</strong> that shifts coefficients
-                                    pseudo-randomly based on a secure seed. In 'Strong' mode, we also apply
-                                    <strong> Universal Adversarial Perturbations</strong>—patterns specifically
-                                    trained to disrupt common vision models.
+                                    Để chống lại việc khớp mẫu (template matching) và các tấn công loại bỏ nhiễu, chúng tôi tiêm một
+                                    <strong> deterministic tiled signature</strong> giúp dịch chuyển các hệ số
+                                    một cách giả ngẫu nhiên dựa trên seed bảo mật. Trong chế độ 'Strong', chúng tôi cũng áp dụng
+                                    <strong> Universal Adversarial Perturbations</strong>—các mẫu nhiễu được huấn luyện cụ thể
+                                    để phá vỡ các mô hình thị giác phổ biến.
                                 </p>
                                 <ul className="mt-4 space-y-2 text-neutral-500 text-sm">
                                     <li className="flex items-start gap-2">
                                         <Eye className="w-4 h-4 text-accent-mint mt-0.5 flex-shrink-0" />
                                         <span>
-                                            <strong>Perceptually Optimized</strong> - tuned to maintain
-                                            high PSNR (&gt;38dB) visual quality.
+                                            <strong>Tối ưu hóa thị giác</strong> - được tinh chỉnh để duy trì
+                                            chất lượng hình ảnh PSNR cao (&gt;38dB).
                                         </span>
                                     </li>
                                     <li className="flex items-start gap-2">
                                         <EyeOff className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                                         <span>
-                                            <strong>Robust Against Resizing</strong> - Multi-scale noise
-                                            survives downscaling better than standard noise.
+                                            <strong>Bền vững khi đổi kích thước</strong> - Nhiễu đa quy mô
+                                            tồn tại tốt hơn khi bị thu nhỏ so với nhiễu thông thường.
                                         </span>
                                     </li>
                                 </ul>
@@ -104,7 +103,7 @@ export function HowItWorks() {
                             <div className="bg-cream rounded-xl p-6">
                                 <div className="text-center mb-4">
                                     <span className="text-sm font-medium text-neutral-400">
-                                        The Protection Pipeline
+                                        Quy trình Bảo vệ
                                     </span>
                                 </div>
                                 <div className="space-y-3">
@@ -113,7 +112,7 @@ export function HowItWorks() {
                                             1
                                         </div>
                                         <span className="text-neutral-600 text-sm">
-                                            Apply Universal Perturbation (Strong Mode)
+                                            Áp dụng Universal Perturbation (Strong Mode)
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-3">
@@ -137,7 +136,7 @@ export function HowItWorks() {
                                             4
                                         </div>
                                         <span className="text-neutral-600 text-sm">
-                                            Reconstruction & PSNR Quality Check
+                                            Tái tạo & Kiểm tra chất lượng PSNR
                                         </span>
                                     </div>
                                 </div>
@@ -164,10 +163,10 @@ export function HowItWorks() {
 
                     <div className="bg-white rounded-2xl shadow-soft p-6 md:p-8">
                         <p className="text-neutral-500 mb-6">
-                            AI scrapers often collect EXIF and XMP metadata (camera info, location,
-                            date, etc.) along with images. We use an <strong>Split XMP Injection</strong> technique
-                            to distribute fake metadata across multiple chunks, making it harder to strip
-                            programmatically while remaining valid for standard readers.
+                            Các trình thu thập dữ liệu (AI scrapers) thường lấy cả metadata EXIF và XMP (thông tin máy ảnh, vị trí,
+                            ngày tháng, v.v.) cùng với hình ảnh. Chúng tôi sử dụng kỹ thuật <strong>Split XMP Injection</strong>
+                            để phân tán metadata giả mạo qua nhiều phân đoạn (chunks), khiến việc loại bỏ chúng
+                            bằng lập trình trở nên khó khăn hơn trong khi vẫn hợp lệ với các trình đọc tiêu chuẩn.
                         </p>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -212,7 +211,7 @@ export function HowItWorks() {
                             <Lock className="w-6 h-6 text-green-600" />
                         </div>
                         <h2 className="text-2xl font-bold text-neutral-600">
-                            Your Privacy Matters
+                            Quyền riêng tư của bạn
                         </h2>
                     </div>
 
@@ -226,8 +225,8 @@ export function HowItWorks() {
                                     100% Client-Side
                                 </h3>
                                 <p className="text-sm text-neutral-500">
-                                    All processing happens in your browser. Your images never
-                                    leave your device.
+                                    Mọi quá trình xử lý diễn ra trên trình duyệt của bạn. Hình ảnh
+                                    không bao giờ rời khỏi thiết bị.
                                 </p>
                             </div>
                             <div className="text-center p-4">
@@ -235,11 +234,11 @@ export function HowItWorks() {
                                     <Shield className="w-7 h-7 text-primary" />
                                 </div>
                                 <h3 className="font-semibold text-neutral-600 mb-2">
-                                    No Data Collection
+                                    Không thu thập dữ liệu
                                 </h3>
                                 <p className="text-sm text-neutral-500">
-                                    We don't store, track, or collect any of your images or
-                                    personal data.
+                                    Chúng tôi không lưu trữ, theo dõi hoặc thu thập bất kỳ hình ảnh
+                                    hoặc dữ liệu cá nhân nào của bạn.
                                 </p>
                             </div>
                             <div className="text-center p-4">
@@ -247,12 +246,11 @@ export function HowItWorks() {
                                     <Download className="w-7 h-7 text-purple-600" />
                                 </div>
                                 <h3 className="font-semibold text-neutral-600 mb-2">
-                                    Instant Download
+                                    Tải về ngay lập tức
                                 </h3>
                                 <p className="text-sm text-neutral-500">
-                                    Protected images are generated instantly and downloaded
-                                    directly to your device. Supports 'Basic' and 'Strong' modes
-                                    to balance speed and protection.
+                                    Ảnh đã bảo vệ được tạo ngay lập tức và tải trực tiếp về thiết bị.
+                                    Hỗ trợ chế độ 'Basic' và 'Strong' để cân bằng giữa tốc độ và bảo mật.
                                 </p>
                             </div>
                         </div>
@@ -271,7 +269,7 @@ export function HowItWorks() {
                         className="inline-flex items-center gap-2 px-8 py-4 bg-primary hover:bg-primary-600 text-white font-bold rounded-2xl shadow-soft transition-colors text-lg"
                     >
                         <Shield className="w-6 h-6" />
-                        Start Protecting Your Images
+                        Bắt đầu bảo vệ ảnh của bạn
                     </Link>
                 </motion.div>
             </main>

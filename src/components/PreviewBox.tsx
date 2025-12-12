@@ -36,13 +36,13 @@ export function PreviewBox({
                             {/* Original image */}
                             <div className="flex-1">
                                 <p className="text-xs font-medium text-neutral-400 mb-2 text-center">
-                                    Original
+                                    Ảnh gốc
                                 </p>
                                 <div className="aspect-video sm:aspect-square rounded-xl bg-cream border border-neutral-300/30 overflow-hidden flex items-center justify-center relative">
                                     {originalUrl ? (
                                         <motion.img
                                             src={originalUrl}
-                                            alt="Original"
+                                            alt="Gốc"
                                             className="w-full h-full object-cover"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
@@ -65,13 +65,13 @@ export function PreviewBox({
                             {/* Protected image */}
                             <div className="flex-1">
                                 <p className="text-xs font-medium text-primary mb-2 text-center">
-                                    Protected
+                                    Đã bảo vệ
                                 </p>
                                 <div className="aspect-video sm:aspect-square rounded-xl bg-cream border border-primary/30 overflow-hidden flex items-center justify-center relative">
                                     {protectedUrl ? (
                                         <motion.img
                                             src={protectedUrl}
-                                            alt="Protected"
+                                            alt="Đã bảo vệ"
                                             className="w-full h-full object-cover"
                                             initial={{ opacity: 0, scale: 0.95 }}
                                             animate={{ opacity: 1, scale: 1 }}
@@ -80,7 +80,7 @@ export function PreviewBox({
                                     ) : isProcessing ? (
                                         <div className="text-center text-primary">
                                             <div className="w-6 h-6 sm:w-8 sm:h-8 border-3 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-                                            <p className="text-xs mt-2">Processing...</p>
+                                            <p className="text-xs mt-2">Đang xử lý...</p>
                                         </div>
                                     ) : (
                                         <div className="text-center text-neutral-400">
@@ -97,7 +97,7 @@ export function PreviewBox({
                         <div className="flex-1 p-2.5 sm:p-3 rounded-xl bg-cream">
                             <div className="flex items-center gap-1.5 sm:gap-2 text-neutral-400 mb-0.5 sm:mb-1">
                                 <FileOutput className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                                <span className="text-xs font-medium">Size</span>
+                                <span className="text-xs font-medium">Kích thước</span>
                             </div>
                             <p className="text-xs sm:text-sm font-semibold text-neutral-600">
                                 {outputSize || '—'}
@@ -106,7 +106,7 @@ export function PreviewBox({
                         <div className="flex-1 p-2.5 sm:p-3 rounded-xl bg-cream">
                             <div className="flex items-center gap-1.5 sm:gap-2 text-neutral-400 mb-0.5 sm:mb-1">
                                 <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                                <span className="text-xs font-medium">Time</span>
+                                <span className="text-xs font-medium">Thời gian</span>
                             </div>
                             <p className="text-xs sm:text-sm font-semibold text-neutral-600">
                                 {processingTime || '—'}
@@ -124,7 +124,7 @@ export function PreviewBox({
                                 whileTap={{ scale: 0.98 }}
                             >
                                 <Download className="w-4 h-4" />
-                                <span className="hidden sm:inline">Download</span>
+                                <span className="hidden sm:inline">Tải về</span>
                             </motion.button>
                         )}
                     </div>
@@ -133,7 +133,7 @@ export function PreviewBox({
                 {/* Info message when no image */}
                 {!hasImage && (
                     <p className="text-center text-neutral-400 text-xs sm:text-sm mt-3 sm:mt-4">
-                        Select an image to see the before/after comparison
+                        Chọn một ảnh để xem so sánh trước và sau
                     </p>
                 )}
             </div>

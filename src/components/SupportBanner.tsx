@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Coffee, Heart } from 'lucide-react';
+import { Coffee, Heart, ArrowRight } from 'lucide-react';
 
 export function SupportBanner() {
     return (
@@ -13,8 +13,7 @@ export function SupportBanner() {
                 <div className="flex items-center gap-2 text-neutral-800 text-sm sm:text-base">
                     <Heart className="w-4 h-4 fill-current" />
                     <span className="font-medium text-center">
-                        <span className="hidden sm:inline">If PixShade helped you, consider supporting the project!</span>
-                        <span className="sm:hidden">Nếu PixShade giúp bạn, hãy cân nhắc hỗ trợ dự án!</span>
+                        <span className="hidden sm:inline">Nếu PixShade giúp cậu, có thể support cho tớ!</span>
                     </span>
                 </div>
                 <motion.a
@@ -26,7 +25,7 @@ export function SupportBanner() {
                     whileTap={{ scale: 0.95 }}
                 >
                     <Coffee className="w-4 h-4" />
-                    Buy me a coffee
+                    Ủng hộ Khoa
                 </motion.a>
             </div>
         </motion.div>
