@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Upload, Link, Shield } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Upload, Link, Shield, Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface DropzoneCardProps {
     onImageSelect?: (file: File | string) => void;
@@ -9,6 +9,7 @@ interface DropzoneCardProps {
     onIntensityChange: (value: number) => void;
     metadataPoisoning: boolean;
     onMetadataPoisoningChange: (value: boolean) => void;
+    isProcessing?: boolean;
 }
 
 export function DropzoneCard({
@@ -18,6 +19,7 @@ export function DropzoneCard({
     onIntensityChange,
     metadataPoisoning,
     onMetadataPoisoningChange,
+    isProcessing = false,
 }: DropzoneCardProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [inputValue, setInputValue] = useState('');
@@ -72,8 +74,8 @@ export function DropzoneCard({
                 {/* Dropzone area */}
                 <motion.div
                     className={`relative border-2 border-dashed rounded-2xl p-8 md:p-12 text-center transition-all duration-200 ${isDragging
-                            ? 'border-primary bg-primary/5 scale-[1.02]'
-                            : 'border-neutral-300 hover:border-primary/50'
+                        ? 'border-primary bg-primary/5 scale-[1.02]'
+                        : 'border-neutral-300 hover:border-primary/50'
                         }`}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
@@ -121,12 +123,20 @@ export function DropzoneCard({
                     </div>
                     <motion.button
                         onClick={onProtect}
-                        className="px-8 py-3 bg-primary hover:bg-primary-600 text-white font-semibold rounded-xl shadow-soft flex items-center gap-2 transition-colors"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        disabled={isProcessing}
+                        className={`px-8 py-3 text-white font-semibold rounded-xl shadow-soft flex items-center gap-2 transition-colors ${isProcessing
+                                ? 'bg-primary/70 cursor-not-allowed'
+                                : 'bg-primary hover:bg-primary-600'
+                            }`}
+                        whileHover={isProcessing ? {} : { scale: 1.02 }}
+                        whileTap={isProcessing ? {} : { scale: 0.98 }}
                     >
-                        <Shield className="w-5 h-5" />
-                        Protect
+                        {isProcessing ? (
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                        ) : (
+                            <Shield className="w-5 h-5" />
+                        )}
+                        {isProcessing ? 'Processing...' : 'Protect'}
                     </motion.button>
                 </div>
 
