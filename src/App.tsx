@@ -5,6 +5,7 @@ import {
   ExampleChips,
   PreviewBox,
   FooterBar,
+  SupportBanner,
 } from './components';
 import {
   protectImage,
@@ -105,10 +106,11 @@ function App() {
   }, [protectedResult]);
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen bg-cream flex flex-col">
+      <SupportBanner />
       <Header />
 
-      <main className="px-4 pb-8">
+      <main className="px-4 pb-8 flex-1">
         <DropzoneCard
           onImageSelect={handleImageSelect}
           onProtect={handleProtect}

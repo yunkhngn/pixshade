@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Shield, Lock, Coffee, Heart, Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Shield, Lock, Heart, Github, HelpCircle } from 'lucide-react';
 
 interface FooterBarProps {
     onProtect?: () => void;
@@ -8,41 +9,13 @@ interface FooterBarProps {
 export function FooterBar({ onProtect }: FooterBarProps) {
     return (
         <motion.footer
-            className="w-full py-8 px-4 mt-8"
+            className="w-full py-6 sm:py-8 px-4 mt-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.8 }}
         >
             <div className="max-w-3xl mx-auto">
-                {/* Buy Me a Coffee prominent banner */}
-                <motion.div
-                    className="mb-6 p-4 bg-gradient-to-r from-[#FFDD00] to-[#FFB86B] rounded-2xl shadow-soft"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 1 }}
-                >
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div className="flex items-center gap-3 text-neutral-800">
-                            <Heart className="w-5 h-5 fill-current" />
-                            <span className="font-medium">
-                                If PixShade helped you, consider supporting the project!
-                            </span>
-                        </div>
-                        <motion.a
-                            href="https://buymeacoffee.com/yunkhngn"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-6 py-2.5 bg-white/90 hover:bg-white text-neutral-800 font-bold rounded-full shadow-md transition-colors"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <Coffee className="w-5 h-5" />
-                            Buy me a coffee ☕
-                        </motion.a>
-                    </div>
-                </motion.div>
-
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                     {/* Privacy note */}
                     <div className="flex items-center gap-2 text-neutral-400 text-sm">
                         <Lock className="w-4 h-4" />
@@ -50,6 +23,15 @@ export function FooterBar({ onProtect }: FooterBarProps) {
                             All processing runs in your browser. No upload involved.
                         </span>
                     </div>
+
+                    {/* How it works link */}
+                    <Link
+                        to="/how-it-works"
+                        className="flex items-center gap-2 text-neutral-400 hover:text-primary text-sm transition-colors"
+                    >
+                        <HelpCircle className="w-4 h-4" />
+                        How it works
+                    </Link>
 
                     {/* Secondary CTA */}
                     <motion.button
