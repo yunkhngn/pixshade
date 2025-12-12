@@ -230,6 +230,148 @@ function applyTextureConfusion(
 }
 
 /**
+ * Apply Gradient-Direction Perturbation (Gradient Masking approximation)
+ * Adds noise perpendicular to image gradients to confuse AI edge detection
+ */
+function applyGradientPerturbation(
+    data: Uint8ClampedArray,
+    width: number,
+    height: number,
+    intensity: number,
+    rng: () => number
+): void {
+    const strength = intensity / 100 * 25;
+    const original = new Uint8ClampedArray(data);
+
+    for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
+            const idx = (y * width + x) * 4;
+
+            // Calculate image gradient using Scharr operator (more accurate than Sobel)
+            let gx = 0, gy = 0;
+            for (let c = 0; c < 3; c++) {
+                const tl = original[((y - 1) * width + (x - 1)) * 4 + c];
+                const tc = original[((y - 1) * width + x) * 4 + c];
+                const tr = original[((y - 1) * width + (x + 1)) * 4 + c];
+                const ml = original[(y * width + (x - 1)) * 4 + c];
+                const mr = original[(y * width + (x + 1)) * 4 + c];
+                const bl = original[((y + 1) * width + (x - 1)) * 4 + c];
+                const bc = original[((y + 1) * width + x) * 4 + c];
+                const br = original[((y + 1) * width + (x + 1)) * 4 + c];
+
+                // Scharr kernels
+                gx += (-3 * tl + 3 * tr - 10 * ml + 10 * mr - 3 * bl + 3 * br) / 3;
+                gy += (-3 * tl - 10 * tc - 3 * tr + 3 * bl + 10 * bc + 3 * br) / 3;
+            }
+
+            const magnitude = Math.sqrt(gx * gx + gy * gy);
+            if (magnitude > 10) {
+                // Normalize gradient direction
+                const nx = gx / magnitude;
+                const ny = gy / magnitude;
+
+                // Perpendicular direction (confuses edge detection)
+                const px = -ny;
+                const py = nx;
+
+                // Add noise in perpendicular direction
+                const noise = (rng() - 0.5) * 2 * strength * (magnitude / 255);
+
+                for (let c = 0; c < 3; c++) {
+                    const perturbation = noise * (c === 0 ? px : py);
+                    data[idx + c] = Math.max(0, Math.min(255, data[idx + c] + perturbation));
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Apply High-Frequency Injection
+ * Injects noise at frequencies that AI models are sensitive to
+ * but human vision is less sensitive to
+ */
+function applyHighFrequencyInjection(
+    data: Uint8ClampedArray,
+    width: number,
+    height: number,
+    intensity: number,
+    rng: () => number
+): void {
+    const strength = intensity / 100 * 12;
+
+    // High-frequency checkerboard-like patterns
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4;
+
+            // Multiple high-frequency patterns combined
+            const hf1 = ((x + y) % 2) * 2 - 1; // Checkerboard
+            const hf2 = ((x % 3) === 0 ? 1 : -1) * ((y % 3) === 0 ? 1 : -1); // 3-pixel pattern
+            const hf3 = Math.sin(x * 0.5) * Math.cos(y * 0.5); // Wave pattern
+
+            const pattern = (hf1 * 0.5 + hf2 * 0.3 + hf3 * 0.2) * strength;
+
+            // Apply to each channel with slight variation
+            for (let c = 0; c < 3; c++) {
+                const channelVariation = (rng() - 0.5) * 2;
+                data[idx + c] = Math.max(0, Math.min(255,
+                    data[idx + c] + pattern + channelVariation
+                ));
+            }
+        }
+    }
+}
+
+/**
+ * Apply Histogram Disruption
+ * Subtly shifts color distribution to confuse style analysis
+ */
+function applyHistogramDisruption(
+    data: Uint8ClampedArray,
+    _width: number,
+    _height: number,
+    intensity: number,
+    rng: () => number
+): void {
+    const strength = intensity / 100;
+
+    // Calculate histogram for each channel
+    const histograms: number[][] = [
+        new Array(256).fill(0),
+        new Array(256).fill(0),
+        new Array(256).fill(0)
+    ];
+
+    for (let i = 0; i < data.length; i += 4) {
+        histograms[0][data[i]]++;
+        histograms[1][data[i + 1]]++;
+        histograms[2][data[i + 2]]++;
+    }
+
+    // Create disruption mapping for each channel
+    const mappings: number[][] = [];
+    for (let c = 0; c < 3; c++) {
+        const mapping = new Array(256);
+        for (let v = 0; v < 256; v++) {
+            // Add non-linear perturbation based on histogram position
+            const shift = Math.sin(v / 255 * Math.PI * 4) * 8 * strength;
+            const randomShift = (rng() - 0.5) * 4 * strength;
+            mapping[v] = Math.max(0, Math.min(255, Math.round(v + shift + randomShift)));
+        }
+        mappings.push(mapping);
+    }
+
+    // Apply mappings
+    for (let i = 0; i < data.length; i += 4) {
+        data[i] = mappings[0][data[i]];
+        data[i + 1] = mappings[1][data[i + 1]];
+        data[i + 2] = mappings[2][data[i + 2]];
+    }
+}
+
+
+/**
  * Apply all style protection techniques
  */
 export function applyStyleProtection(
@@ -264,6 +406,12 @@ export function applyStyleProtection(
         applyTextureConfusion(result.data, width, height, options.intensity, rng);
     }
 
+    // NEW: Advanced AI protection techniques (always applied in style protection mode)
+    applyGradientPerturbation(result.data, width, height, options.intensity, rng);
+    applyHighFrequencyInjection(result.data, width, height, options.intensity, rng);
+    applyHistogramDisruption(result.data, width, height, options.intensity, rng);
+
     return result;
 }
+
 

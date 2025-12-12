@@ -9,8 +9,11 @@ import {
   PresetSelector,
   BatchProgress,
   QualityMetrics,
+  NavTabs,
   type BatchFile,
+  type TabMode,
 } from './components';
+import { CheckPage } from './pages/CheckPage';
 import {
   protectImage,
   downloadProtectedImage,
@@ -28,6 +31,9 @@ import {
 import './index.css';
 
 function App() {
+  // Active tab
+  const [activeTab, setActiveTab] = useState<TabMode>('protect');
+
   // Preset mode
   const [presetMode, setPresetMode] = useState<PresetMode>(DEFAULT_PRESET);
 
@@ -238,77 +244,88 @@ function App() {
       <Header />
 
       <main className="px-4 pb-8 flex-1">
-        <DropzoneCard
-          onImageSelect={handleImageSelect}
-          onProtect={handleProtect}
-          metadataPoisoning={metadataPoisoning}
-          onMetadataPoisoningChange={setMetadataPoisoning}
-          watermarkEnabled={watermarkEnabled}
-          onWatermarkEnabledChange={setWatermarkEnabled}
-          watermarkFile={watermarkFile}
-          onWatermarkFileChange={setWatermarkFile}
-          watermarkOpacity={watermarkOpacity}
-          onWatermarkOpacityChange={setWatermarkOpacity}
-          styleProtection={styleProtection}
-          onStyleProtectionChange={setStyleProtection}
-          sketchMode={sketchMode}
-          onSketchModeChange={setSketchMode}
-          isProcessing={isProcessing}
-          multiple={true}
-        />
+        {/* Navigation Tabs */}
+        <NavTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-        {/* Preset Selector */}
-        <div className="max-w-3xl mx-auto mt-6">
-          <PresetSelector
-            value={presetMode}
-            onChange={handlePresetChange}
-            disabled={isProcessing}
-          />
-        </div>
+        {/* Check Page */}
+        {activeTab === 'check' && <CheckPage />}
 
-        {/* Batch Progress */}
-        <div className="max-w-3xl mx-auto">
-          <BatchProgress
-            files={batchFiles}
-            onRemove={handleRemoveFile}
-            onSelect={setSelectedFileId}
-            selectedId={selectedFileId || undefined}
-            isProcessing={isProcessing}
-          />
-        </div>
-
-        <ExampleChips onSelectExample={handleSelectExample} />
-
-        {error && (
-          <div className="max-w-3xl mx-auto mt-4 p-4 bg-red-100 text-red-700 rounded-xl text-center">
-            {error}
-          </div>
-        )}
-
-        <PreviewBox
-          originalUrl={originalUrl}
-          protectedUrl={protectedResult?.url}
-          isProcessing={isProcessing}
-          outputSize={protectedResult ? formatFileSize(protectedResult.size) : undefined}
-          processingTime={protectedResult ? formatProcessingTime(protectedResult.processingTime) : undefined}
-          onDownload={hasResults ? handleDownload : undefined}
-          downloadLabel={batchResults.length > 1 ? `Tải ZIP (${completedCount} ảnh)` : undefined}
-        />
-
-        {/* Quality Metrics */}
-        {protectedResult && (
-          <div className="max-w-3xl mx-auto">
-            <QualityMetrics
-              psnr={protectedResult.psnr}
-              ssim={protectedResult.ssim}
-              processingTime={protectedResult.processingTime}
-              size={protectedResult.size}
+        {/* Protect Page */}
+        {activeTab === 'protect' && (
+          <>
+            <DropzoneCard
+              onImageSelect={handleImageSelect}
+              onProtect={handleProtect}
+              metadataPoisoning={metadataPoisoning}
+              onMetadataPoisoningChange={setMetadataPoisoning}
+              watermarkEnabled={watermarkEnabled}
+              onWatermarkEnabledChange={setWatermarkEnabled}
+              watermarkFile={watermarkFile}
+              onWatermarkFileChange={setWatermarkFile}
+              watermarkOpacity={watermarkOpacity}
+              onWatermarkOpacityChange={setWatermarkOpacity}
+              styleProtection={styleProtection}
+              onStyleProtectionChange={setStyleProtection}
+              sketchMode={sketchMode}
+              onSketchModeChange={setSketchMode}
+              isProcessing={isProcessing}
+              multiple={true}
             />
-          </div>
+
+            {/* Preset Selector */}
+            <div className="max-w-3xl mx-auto mt-6">
+              <PresetSelector
+                value={presetMode}
+                onChange={handlePresetChange}
+                disabled={isProcessing}
+              />
+            </div>
+
+            {/* Batch Progress */}
+            <div className="max-w-3xl mx-auto">
+              <BatchProgress
+                files={batchFiles}
+                onRemove={handleRemoveFile}
+                onSelect={setSelectedFileId}
+                selectedId={selectedFileId || undefined}
+                isProcessing={isProcessing}
+              />
+            </div>
+
+            <ExampleChips onSelectExample={handleSelectExample} />
+
+            {error && (
+              <div className="max-w-3xl mx-auto mt-4 p-4 bg-red-100 text-red-700 rounded-xl text-center">
+                {error}
+              </div>
+            )}
+
+            <PreviewBox
+              originalUrl={originalUrl}
+              protectedUrl={protectedResult?.url}
+              isProcessing={isProcessing}
+              outputSize={protectedResult ? formatFileSize(protectedResult.size) : undefined}
+              processingTime={protectedResult ? formatProcessingTime(protectedResult.processingTime) : undefined}
+              onDownload={hasResults ? handleDownload : undefined}
+              downloadLabel={batchResults.length > 1 ? `Tải ZIP (${completedCount} ảnh)` : undefined}
+            />
+
+            {/* Quality Metrics */}
+            {protectedResult && (
+              <div className="max-w-3xl mx-auto">
+                <QualityMetrics
+                  psnr={protectedResult.psnr}
+                  ssim={protectedResult.ssim}
+                  processingTime={protectedResult.processingTime}
+                  size={protectedResult.size}
+                />
+              </div>
+            )}
+          </>
         )}
       </main>
 
-      <FooterBar onProtect={handleProtect} />
+      {activeTab === 'protect' && <FooterBar onProtect={handleProtect} />}
     </div>
   );
 }
