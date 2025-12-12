@@ -16,6 +16,7 @@ export interface ProtectionOptions {
         enableColorShift: boolean;
         enableEdgeDisruption: boolean;
         enableTextureConfusion: boolean;
+        sketchMode?: boolean;
     };
 }
 

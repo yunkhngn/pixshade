@@ -31,6 +31,7 @@ export interface WorkerMessage {
             enableColorShift: boolean;
             enableEdgeDisruption: boolean;
             enableTextureConfusion: boolean;
+            sketchMode?: boolean;
         };
     };
 }

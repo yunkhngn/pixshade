@@ -15,6 +15,8 @@ interface DropzoneCardProps {
     onWatermarkOpacityChange: (value: number) => void;
     styleProtection: boolean;
     onStyleProtectionChange: (value: boolean) => void;
+    sketchMode: boolean;
+    onSketchModeChange: (value: boolean) => void;
     isProcessing?: boolean;
     multiple?: boolean;
 }
@@ -32,6 +34,8 @@ export function DropzoneCard({
     onWatermarkOpacityChange,
     styleProtection,
     onStyleProtectionChange,
+    sketchMode,
+    onSketchModeChange,
     isProcessing = false,
     multiple = false,
 }: DropzoneCardProps) {
@@ -241,11 +245,43 @@ export function DropzoneCard({
                                     Chống sao chép
                                 </span>
                                 <p className="text-xs text-neutral-400">
-                                    Bảo vệ style khỏi AI
+                                    Tốt nhất cho tranh màu & digital
                                 </p>
                             </div>
                         </div>
                     </div>
+
+                    {/* Sketch Mode toggle (shown when style protection enabled) */}
+                    {styleProtection && (
+                        <motion.div
+                            className="flex items-center gap-3 p-3 rounded-xl bg-purple-50 border border-purple-200"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                        >
+                            <button
+                                onClick={() => onSketchModeChange(!sketchMode)}
+                                className={`relative w-10 h-6 rounded-full transition-colors ${sketchMode ? 'bg-purple-500' : 'bg-neutral-300'}`}
+                                role="switch"
+                                aria-checked={sketchMode}
+                                aria-label="Toggle sketch mode"
+                            >
+                                <motion.div
+                                    className="absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-md"
+                                    animate={{ left: sketchMode ? '1.125rem' : '0.125rem' }}
+                                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                                />
+                            </button>
+                            <div>
+                                <span className="text-sm font-medium text-purple-700">
+                                    Chế độ Sketch
+                                </span>
+                                <p className="text-xs text-purple-500">
+                                    Tối ưu cho tranh line art
+                                </p>
+                            </div>
+                        </motion.div>
+                    )}
 
                     {/* Watermark upload (shown when enabled) */}
                     {watermarkEnabled && (

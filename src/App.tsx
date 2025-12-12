@@ -37,6 +37,7 @@ function App() {
   const [watermarkFile, setWatermarkFile] = useState<File | null>(null);
   const [watermarkOpacity, setWatermarkOpacity] = useState(15);
   const [styleProtection, setStyleProtection] = useState(false);
+  const [sketchMode, setSketchMode] = useState(false);
 
   // Batch files state
   const [batchFiles, setBatchFiles] = useState<BatchFile[]>([]);
@@ -179,6 +180,7 @@ function App() {
               enableColorShift: true,
               enableEdgeDisruption: true,
               enableTextureConfusion: true,
+              sketchMode: sketchMode,
             } : undefined,
           });
 
@@ -249,6 +251,8 @@ function App() {
           onWatermarkOpacityChange={setWatermarkOpacity}
           styleProtection={styleProtection}
           onStyleProtectionChange={setStyleProtection}
+          sketchMode={sketchMode}
+          onSketchModeChange={setSketchMode}
           isProcessing={isProcessing}
           multiple={true}
         />

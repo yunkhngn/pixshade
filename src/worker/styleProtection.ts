@@ -19,6 +19,7 @@ export interface StyleProtectionOptions {
     enableColorShift: boolean;
     enableEdgeDisruption: boolean;
     enableTextureConfusion: boolean;
+    sketchMode?: boolean;  // Optimized for line art/sketch
 }
 
 /**
@@ -123,15 +124,24 @@ function applyColorShift(
 /**
  * Apply edge disruption (Nightshade-inspired)
  * Adds noise specifically to edges that AI models rely on for style detection
+ * In sketch mode: stronger edge focus, minimal noise on blank areas
  */
 function applyEdgeDisruption(
     data: Uint8ClampedArray,
     width: number,
     height: number,
     intensity: number,
-    rng: () => number
+    rng: () => number,
+    sketchMode: boolean = false
 ): void {
-    const strength = intensity / 100 * 30;
+    // Sketch mode uses stronger strength but only on edges
+    const strength = sketchMode
+        ? intensity / 100 * 50  // Stronger for visible edges in sketch
+        : intensity / 100 * 30;
+
+    // Lower threshold for sketch to catch thinner lines
+    const edgeThreshold = sketchMode ? 0.05 : 0.1;
+
     const edgeData = new Uint8ClampedArray(data);
 
     // Sobel edge detection kernels
@@ -158,15 +168,21 @@ function applyEdgeDisruption(
             const normalizedEdge = Math.min(edgeMagnitude / 255, 1);
 
             // Add noise proportional to edge strength
-            if (normalizedEdge > 0.1) {
+            if (normalizedEdge > edgeThreshold) {
                 const idx = (y * width + x) * 4;
-                const noiseScale = normalizedEdge * strength;
+
+                // In sketch mode, concentrate noise more strongly on detected edges
+                const edgeMultiplier = sketchMode
+                    ? Math.pow(normalizedEdge, 0.5)  // Amplify edge effect
+                    : normalizedEdge;
+                const noiseScale = edgeMultiplier * strength;
 
                 for (let c = 0; c < 3; c++) {
                     const noise = (rng() - 0.5) * 2 * noiseScale;
                     data[idx + c] = Math.max(0, Math.min(255, data[idx + c] + noise));
                 }
             }
+            // In sketch mode: NO noise on blank areas (normalizedEdge <= threshold)
         }
     }
 }
@@ -233,7 +249,7 @@ export function applyStyleProtection(
     }
 
     if (options.enableEdgeDisruption) {
-        applyEdgeDisruption(result.data, width, height, options.intensity, rng);
+        applyEdgeDisruption(result.data, width, height, options.intensity, rng, options.sketchMode);
     }
 
     if (options.enableTextureConfusion) {
