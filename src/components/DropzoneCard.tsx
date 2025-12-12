@@ -13,6 +13,8 @@ interface DropzoneCardProps {
     onWatermarkEnabledChange: (value: boolean) => void;
     watermarkFile: File | null;
     onWatermarkFileChange: (file: File | null) => void;
+    watermarkOpacity: number;
+    onWatermarkOpacityChange: (value: number) => void;
     isProcessing?: boolean;
 }
 
@@ -27,6 +29,8 @@ export function DropzoneCard({
     onWatermarkEnabledChange,
     watermarkFile,
     onWatermarkFileChange,
+    watermarkOpacity,
+    onWatermarkOpacityChange,
     isProcessing = false,
 }: DropzoneCardProps) {
     const [isDragging, setIsDragging] = useState(false);
@@ -243,7 +247,7 @@ export function DropzoneCard({
                             <p className="text-sm font-medium text-neutral-600 mb-3">
                                 Upload watermark (PNG trong suốt)
                             </p>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 flex-wrap">
                                 <input
                                     ref={watermarkInputRef}
                                     type="file"
@@ -275,6 +279,29 @@ export function DropzoneCard({
                                         Hoặc dùng mặc định "© PixShade"
                                     </span>
                                 )}
+                            </div>
+
+                            {/* Opacity slider */}
+                            <div className="mt-4">
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="text-xs font-medium text-neutral-500">
+                                        Độ trong suốt
+                                    </label>
+                                    <span className="text-xs font-bold text-accent-mint">{watermarkOpacity}%</span>
+                                </div>
+                                <input
+                                    type="range"
+                                    min="5"
+                                    max="50"
+                                    value={watermarkOpacity}
+                                    onChange={(e) => onWatermarkOpacityChange(Number(e.target.value))}
+                                    className="w-full accent-accent-mint"
+                                    aria-label={`Độ trong suốt watermark: ${watermarkOpacity}%`}
+                                />
+                                <div className="flex justify-between text-xs text-neutral-400 mt-1">
+                                    <span>Mờ hơn</span>
+                                    <span>Rõ hơn</span>
+                                </div>
                             </div>
                         </motion.div>
                     )}

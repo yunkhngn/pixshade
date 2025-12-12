@@ -22,6 +22,7 @@ function App() {
   const [metadataPoisoning, setMetadataPoisoning] = useState(true);
   const [watermarkEnabled, setWatermarkEnabled] = useState(false);
   const [watermarkFile, setWatermarkFile] = useState<File | null>(null);
+  const [watermarkOpacity, setWatermarkOpacity] = useState(15);
 
   // Original image state
   const [originalFile, setOriginalFile] = useState<File | Blob | null>(null);
@@ -96,7 +97,7 @@ function App() {
           enabled: true,
           type: watermarkFile ? 'image' : 'text',
           imageBitmap: watermarkBitmap,
-          opacity: 0.12,
+          opacity: watermarkOpacity / 100,
           scale: 0.5,
         } : undefined,
       });
@@ -112,7 +113,7 @@ function App() {
     } finally {
       setIsProcessing(false);
     }
-  }, [originalFile, intensity, metadataPoisoning, watermarkEnabled, watermarkFile, protectedResult]);
+  }, [originalFile, intensity, metadataPoisoning, watermarkEnabled, watermarkFile, watermarkOpacity, protectedResult]);
 
   const handleDownload = useCallback(() => {
     if (protectedResult) {
@@ -137,6 +138,8 @@ function App() {
           onWatermarkEnabledChange={setWatermarkEnabled}
           watermarkFile={watermarkFile}
           onWatermarkFileChange={setWatermarkFile}
+          watermarkOpacity={watermarkOpacity}
+          onWatermarkOpacityChange={setWatermarkOpacity}
           isProcessing={isProcessing}
         />
 
