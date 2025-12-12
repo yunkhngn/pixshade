@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+/* Custom color palette - PixShade pastel theme */
+@theme {
+  --color-cream: #FFF9F2;
+  --color-primary: #FFB86B;
+  --color-primary-600: #FF9F3B;
+  --color-primary-700: #E88A2A;
+  --color-accent-mint: #D6F0E0;
+  --color-accent-lavender: #F3D8F3;
+  --color-neutral-600: #4B5563;
+  --color-neutral-400: #9CA3AF;
+  --color-neutral-300: #D1D5DB;
+
+  /* Custom shadows */
+  --shadow-soft: 0 4px 20px rgba(16, 24, 40, 0.06);
+  --shadow-card: 0 8px 32px rgba(16, 24, 40, 0.08);
+  --shadow-glow: 0 0 24px rgba(255, 184, 107, 0.3);
+
+  /* Font families */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Poppins', 'Inter', system-ui, sans-serif;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-neutral-600);
+  min-height: 100vh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom utilities */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Focus ring styles */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Slider thumb styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--color-neutral-300);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 4px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-top: -8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 184, 107, 0.4);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--color-neutral-300);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 4px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 184, 107, 0.4);
+}
