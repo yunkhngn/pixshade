@@ -243,13 +243,21 @@ export function applyStyleProtection(
     const prng = new PRNG(options.seed);
     const rng = () => prng.random();
 
-    // Apply each protection technique
+    // In sketch mode: ONLY use edge disruption to avoid noise on blank areas
+    if (options.sketchMode) {
+        if (options.enableEdgeDisruption) {
+            applyEdgeDisruption(result.data, width, height, options.intensity, rng, true);
+        }
+        return result;
+    }
+
+    // Normal mode: Apply all protection techniques
     if (options.enableColorShift) {
         applyColorShift(result.data, width, height, options.intensity, rng);
     }
 
     if (options.enableEdgeDisruption) {
-        applyEdgeDisruption(result.data, width, height, options.intensity, rng, options.sketchMode);
+        applyEdgeDisruption(result.data, width, height, options.intensity, rng, false);
     }
 
     if (options.enableTextureConfusion) {
@@ -258,3 +266,4 @@ export function applyStyleProtection(
 
     return result;
 }
+
