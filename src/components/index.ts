@@ -7,6 +7,5 @@ export { SupportBanner } from './SupportBanner';
 export { PresetSelector } from './PresetSelector';
 export { BatchProgress } from './BatchProgress';
 export { QualityMetrics } from './QualityMetrics';
-export { NavTabs } from './NavTabs';
 export type { BatchFile, FileStatus } from './BatchProgress';
-export type { TabMode } from './NavTabs';
+
